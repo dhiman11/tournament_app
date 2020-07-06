@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        final BottomNavigationView navView = findViewById(R.id.nav_view);
+        BottomNavigationView navView = findViewById(R.id.nav_view);
 
         homeFragment  = new HomeFragment();
         dashboardFragment = new DashboardFragment();
@@ -53,32 +53,42 @@ public class HomeActivity extends AppCompatActivity {
 
         setFragment(homeFragment);
 
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,R.id.profile_detail)
+                .build();
+
+
+
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected (@NonNull MenuItem item) {
+                Fragment fragment = null;
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_view);
                 switch (item.getItemId()){
                     case R.id.navigation_home :
-                        setFragment(homeFragment);
-                         return true;
+                        if (!(currentFragment instanceof HomeFragment)) {
+                            fragment = new HomeFragment();
+                        }
+                        break;
                     case R.id.navigation_dashboard:
-                        setFragment(dashboardFragment);
-                        return true;
+                        if (!(currentFragment instanceof DashboardFragment)) {
+                            fragment = new DashboardFragment();
+                        }
+                        break;
                     case R.id.navigation_notifications:
-                        setFragment(notifragment);
-                        return true;
-
+                        if (!(currentFragment instanceof NotificationsFragment)) {
+                            fragment = new NotificationsFragment();
+                        }
+                        break;
                     case R.id.profile_detail:
-                        setFragment(profileFragment);
-                        return true;
-
-
-
-
-                    default:
-                        return false;
-
+                        if (!(currentFragment instanceof ProfileFragment)) {
+                            fragment = new ProfileFragment();
+                        }
+                        break;
 
                 }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "TAG").commit();
+                return true;
             }
         });
     }
@@ -87,9 +97,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
         try {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.nav_host_fragment,fragment);
-            fragmentTransaction.commit();
+            if (fragment != null) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
 //            Toast.makeText("Hmm..",e.getMessage(), Toast.LENGTH_SHORT).show();

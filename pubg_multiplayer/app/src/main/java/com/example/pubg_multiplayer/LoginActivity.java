@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -22,19 +23,24 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText mCountryCode;
     private EditText mPhoneNumber;
-
+    private String complete_phone_number;
     private Button mGenerateBtn;
     private ProgressBar mLoginProgress;
+    private Map<String, Object> user_data = new HashMap<>();
 
     private TextView mLoginFeedbackText;
 
@@ -129,6 +135,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            /////ADD USER DATA INSIDE FIREBASE
+
                             sendUserToHome();
                             // ...
                         } else {
@@ -144,8 +152,24 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    private void storeData(String complete_phone_number) {
+
+        user_data.put("phone", complete_phone_number.toString().trim());
+        db.collection("Users").document(mCurrentUser.getUid()).set(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(LoginActivity.this, "Register sucess", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
     private void sendUserToHome() {
-        Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
+
+        storeData(complete_phone_number.toString());
+
+        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(homeIntent);

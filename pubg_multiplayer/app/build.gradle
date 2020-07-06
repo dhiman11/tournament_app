@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.example.pubg_multiplayer"
@@ -42,10 +42,10 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
     //或androidx支持库的multidex库
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:29.0.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
 }

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "446878380673-4pm6ph5rtisejb04a23di2rge4f3596h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pubg_multiplayer",
+            "certificate_hash": "e29b747dfec8ee7208c5d6c2e813f5d079f5e70c"
+          }
+        },
+        {
           "client_id": "446878380673-dimaj40r48u0ti15ekufl8qsav7idg3u.apps.googleusercontent.com",
           "client_type": 3
         }

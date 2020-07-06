@@ -1,6 +1,7 @@
 package com.example.pubg_multiplayer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,16 +14,25 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,6 +42,11 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private  int RC_SIGN_IN = 1;
+    /////Google singn IN///////////
+    private SignInButton googleSignInbutton;
+    private GoogleSignInClient mGooleSigninclient;
+    ////////////////////////////
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -119,6 +134,63 @@ public class LoginActivity extends AppCompatActivity {
         };
 
 
+        //////////Google sign in
+
+        googleSignInbutton = findViewById(R.id.google_sign_in);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGooleSigninclient = GoogleSignIn.getClient(this,gso);
+
+        googleSignInbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signin_google();
+            }
+        });
+
+    }
+
+    private void signin_google() {
+    Intent signinIntent = mGooleSigninclient.getSignInIntent();
+    startActivityForResult(signinIntent,RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            Task<GoogleSignInAccount> googletask = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleGoogleSigninResult(googletask);
+        }
+    }
+
+    private void handleGoogleSigninResult(Task<GoogleSignInAccount> googletask) {
+        try {
+            GoogleSignInAccount gacc =  googletask.getResult(ApiException.class);
+            Toast.makeText(this, "Google sign in successfull", Toast.LENGTH_SHORT).show();
+            FirebaseGoogleatuth(gacc);
+        }catch (ApiException e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void FirebaseGoogleatuth(GoogleSignInAccount gacc) {
+        AuthCredential  authCredential = GoogleAuthProvider.getCredential(gacc.getIdToken(),null);
+        mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(LoginActivity.this, "Success final", Toast.LENGTH_SHORT).show();
+                        sendUserToHome();
+
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Failed final", Toast.LENGTH_SHORT).show();
+                    }
+            }
+        });
     }
 
     @Override
@@ -152,22 +224,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void storeData(String complete_phone_number) {
-
-        user_data.put("phone", complete_phone_number.toString().trim());
-        db.collection("Users").document(mCurrentUser.getUid()).set(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(LoginActivity.this, "Register sucess", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-    }
 
     private void sendUserToHome() {
-
-        storeData(complete_phone_number.toString());
 
         Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

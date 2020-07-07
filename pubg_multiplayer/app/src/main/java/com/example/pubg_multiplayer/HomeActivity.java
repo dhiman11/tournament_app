@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -96,15 +97,18 @@ public class HomeActivity extends AppCompatActivity {
     private void setFragment(Fragment fragment) {
 
 
+
+
         try {
-            if (fragment != null) {
+            if (!fragment.isAdded()) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
                 fragmentTransaction.replace(R.id.nav_host_fragment, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         }catch (Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error Message : - "+e.getMessage(), Toast.LENGTH_SHORT).show();
 //            Toast.makeText("Hmm..",e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 

@@ -134,24 +134,23 @@ public class LoginActivity extends AppCompatActivity {
         };
 
 
-        //////////Google sign in
+            //////////Google sign in ////////////////////
+            ////////////////////////////////////////////
+            googleSignInbutton = findViewById(R.id.google_sign_in);
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            mGooleSigninclient = GoogleSignIn.getClient(this,gso);
 
-        googleSignInbutton = findViewById(R.id.google_sign_in);
+            googleSignInbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    signin_google();
+                }
+            });
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGooleSigninclient = GoogleSignIn.getClient(this,gso);
-
-        googleSignInbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signin_google();
-            }
-        });
-
-    }
+        }
 
     private void signin_google() {
     Intent signinIntent = mGooleSigninclient.getSignInIntent();
@@ -170,10 +169,12 @@ public class LoginActivity extends AppCompatActivity {
     private void handleGoogleSigninResult(Task<GoogleSignInAccount> googletask) {
         try {
             GoogleSignInAccount gacc =  googletask.getResult(ApiException.class);
-            Toast.makeText(this, "Google sign in successfull", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Google sign in successfull", Toast.LENGTH_SHORT).show();
             FirebaseGoogleatuth(gacc);
         }catch (ApiException e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("Error",e.getMessage().toString());
+//            Toast.makeText(this, "Error Message:-"+e.getCause().toString(), Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -183,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(LoginActivity.this, "Success final", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Success final", Toast.LENGTH_SHORT).show(); 
                         sendUserToHome();
 
                     }else{

@@ -75,7 +75,9 @@ public class HomeFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Games p = document.toObject(Games.class);
                                 list.add(p);
+
                             }
+
                             adapter = new MygamesAdapter(getActivity(),list);
                             Toast.makeText(getActivity(), "Loading recycle view", Toast.LENGTH_SHORT).show();
                             mRecyclerView.setAdapter(adapter);

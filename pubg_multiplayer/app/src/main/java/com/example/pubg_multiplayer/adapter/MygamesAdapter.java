@@ -1,6 +1,7 @@
 package com.example.pubg_multiplayer.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.pubg_multiplayer.R;
 import com.example.pubg_multiplayer.model.Games;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,13 +39,19 @@ public class MygamesAdapter extends RecyclerView.Adapter<MygamesAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+
         holder.name.setText(games.get(position).getName());
-        Picasso.get().load(games.get(position).getImage()).into(holder.game_image);
-//        if(games.get(position).getPermission()) {
-//            holder.btn.setVisibility(View.VISIBLE);
-//            holder.onClick(position);
-//        }
+        Picasso.get().load(games.get(position).getImage()).into(holder.game_image) ;
+
+
+
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("msg of the week",games.get(position).getUid());
+            }
+        });
     }
 
     @Override
@@ -55,21 +63,26 @@ public class MygamesAdapter extends RecyclerView.Adapter<MygamesAdapter.MyViewHo
     {
         TextView name,email;
         ImageView game_image;
+        Button button;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.game_name);
             game_image = (ImageView) itemView.findViewById(R.id.game_image);
+            button = (Button) itemView.findViewById(R.id.play_now);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Clieckd", Toast.LENGTH_SHORT).show();
+                    Log.d("king11", String.valueOf(v.getId()));
+                }
+            });
+
 
         }
-//        public void onClick(final int position)
-//        {
-//            btn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(context, position+" is clicked", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
+
+
+
     }
 }

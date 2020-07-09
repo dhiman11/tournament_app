@@ -1,6 +1,8 @@
 package com.example.pubg_multiplayer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.pubg_multiplayer.GamesSubList;
 import com.example.pubg_multiplayer.R;
 import com.example.pubg_multiplayer.model.Games;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class MygamesAdapter extends RecyclerView.Adapter<MygamesAdapter.MyViewHo
 
     Context context;
     ArrayList<Games> games;
+
 
     public MygamesAdapter(Context c , ArrayList<Games> g)
     {
@@ -49,7 +52,16 @@ public class MygamesAdapter extends RecyclerView.Adapter<MygamesAdapter.MyViewHo
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("msg of the week",games.get(position).getUid());
+
+                ////LOAD A NEW FRAGMENT?//////////
+                try {
+                    Intent i = new Intent(context, GamesSubList.class);
+                    i.putExtra("doc", games.get(position).getUid());
+                    context.startActivity(i);
+                } catch (ClassCastException e) {
+
+                }
+
             }
         });
     }
@@ -64,6 +76,8 @@ public class MygamesAdapter extends RecyclerView.Adapter<MygamesAdapter.MyViewHo
         TextView name,email;
         ImageView game_image;
         Button button;
+
+
 
         public MyViewHolder(View itemView) {
             super(itemView);

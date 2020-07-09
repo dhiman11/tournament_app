@@ -4,32 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#3E3E3E"
     tools:context=".ui.dashboard.DashboardFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/games_bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/notifications_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dashbaord"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/games_bar"
+        app:layout_constraintEnd_toEndOf="@+id/games_bar"
+        app:layout_constraintStart_toStartOf="@+id/games_bar"
+        app:layout_constraintTop_toTopOf="@+id/games_bar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="170dp"
         android:layout_height="160dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="24dp"
-        android:background="#FFB1B1"
+        android:background="#ADFFA7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:shadowColor="#000000"
-            android:text="My Match Win"
-            android:textAlignment="center"
-            android:textColor="#575757"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView18"
@@ -41,9 +50,26 @@
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
         <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-medium"
+            android:shadowColor="#000000"
+            android:text="My Match Win"
+            android:textAlignment="center"
+            android:textColor="#575757"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/textView31"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:fontFamily="sans-serif-medium"
             android:text="101"
             android:textAlignment="center"
             android:textColor="#575757"
@@ -62,42 +88,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/games_bar"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dashbaord"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/games_bar"
-        app:layout_constraintEnd_toEndOf="@+id/games_bar"
-        app:layout_constraintStart_toStartOf="@+id/games_bar"
-        app:layout_constraintTop_toTopOf="@+id/games_bar" />
-
-    <ImageButton
-        android:id="@+id/image_log_out"
-        android:layout_width="40dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="16dp"
-        android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/games_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/games_bar"
-        app:layout_constraintVertical_bias="0.512"
-        app:srcCompat="@android:drawable/ic_lock_power_off" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="170dp"
@@ -105,7 +95,7 @@
         android:layout_marginStart="24dp"
 
         android:layout_marginTop="36dp"
-        android:background="#EBFFEC"
+        android:background="#C3CBFF"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-medium"
             android:text="₹10"
             android:textAlignment="center"
             android:textColor="#575757"
@@ -141,6 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-medium"
             android:shadowColor="#000000"
             android:text="Wallet Balance"
             android:textAlignment="center"
@@ -175,24 +167,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/games_bar">
 
-        <TextView
-            android:id="@+id/textView9"
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tap here to add"
-            android:textAlignment="center"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="71dp"
+            android:src="@drawable/ic_baseline_account_balance_wallet_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif-medium"
             android:text="+ Add ₹20"
             android:textAlignment="center"
             android:textColor="#575757"
@@ -208,6 +197,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-medium"
             android:shadowColor="#000000"
             android:text="Wallet Topup"
             android:textAlignment="center"
@@ -218,14 +208,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView2"
+        <TextView
+            android:id="@+id/textView9"
             android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:src="@drawable/ic_baseline_account_balance_wallet_24"
+            android:layout_height="wrap_content"
+            android:text="Tap here to add"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintVertical_bias="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -238,24 +232,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-        <TextView
-            android:id="@+id/textView24"
+        <ImageView
+            android:id="@+id/imageView16"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You are Killer"
-            android:textAlignment="center"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="71dp"
+            android:src="@drawable/ic_baseline_whatshot_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23"
-            app:layout_constraintVertical_bias="0.533" />
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <TextView
             android:id="@+id/textView23"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:fontFamily="sans-serif-medium"
             android:text="101"
             android:textAlignment="center"
             android:textColor="#575757"
@@ -270,6 +260,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-medium"
             android:shadowColor="#000000"
             android:text="My Total Kills"
             android:textAlignment="center"
@@ -280,14 +271,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView16"
+        <TextView
+            android:id="@+id/textView24"
             android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:src="@drawable/ic_baseline_whatshot_24"
+            android:layout_height="wrap_content"
+            android:text="You are Killer"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintTop_toBottomOf="@+id/textView23"
+            app:layout_constraintVertical_bias="0.533" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

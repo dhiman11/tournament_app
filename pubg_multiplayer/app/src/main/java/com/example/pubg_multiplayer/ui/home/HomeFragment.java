@@ -8,19 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pubg_multiplayer.LoginActivity;
-import com.example.pubg_multiplayer.MainActivity;
 import com.example.pubg_multiplayer.R;
 import com.example.pubg_multiplayer.adapter.MygamesAdapter;
 import com.example.pubg_multiplayer.model.Games;
@@ -43,7 +38,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Games> list;
     MygamesAdapter adapter;
     private ProgressBar gamelist_progress_bar;
-    private ImageButton image_log_out;
+//    private ImageButton image_log_out;
     private HomeViewModel homeViewModel;
     private LinearLayoutManager layoutManager;
     private View rootView;
@@ -55,7 +50,7 @@ public class HomeFragment extends Fragment {
 //        rootView.setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.gamerecycleview);
         mRecyclerView.setLayoutManager( new LinearLayoutManager(getActivity()));
-        image_log_out = (ImageButton) rootView.findViewById(R.id.image_log_out);
+//        image_log_out = (ImageButton) rootView.findViewById(R.id.image_log_out_btn);
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
@@ -63,13 +58,13 @@ public class HomeFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        image_log_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                sendUserToLogin();
-            }
-        });
+//        image_log_out.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAuth.signOut();
+//                sendUserToLogin();
+//            }
+//        });
 
         db.collection("Games")
                 .get()

@@ -4,5 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".ui.notifications.NotificationsFragment" />
+    android:background="@color/background_color"
+    tools:context=".ui.notifications.NotificationsFragment" >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/games_bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/notifications_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/games_bar"
+        app:layout_constraintEnd_toEndOf="@+id/games_bar"
+        app:layout_constraintStart_toStartOf="@+id/games_bar"
+        app:layout_constraintTop_toTopOf="@+id/games_bar" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -46,6 +47,10 @@ public class LoginActivity extends AppCompatActivity {
     /////Google singn IN///////////
     private SignInButton googleSignInbutton;
     private GoogleSignInClient mGooleSigninclient;
+    private String UserEmail;
+    private String UserPhone;
+    private String Userid;
+
     ////////////////////////////
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
@@ -184,7 +189,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(LoginActivity.this, "Success final", Toast.LENGTH_SHORT).show(); 
+
+
+                        /////ADD USER DATA INSIDE FIREBASE ///////////
+                        UserEmail = (String) mAuth.getCurrentUser().getEmail();
+                        Userid = (String) mAuth.getCurrentUser().getUid();
+                        storedata_of_user(UserEmail,"",Userid);
                         sendUserToHome();
 
                     }else{
@@ -192,6 +202,25 @@ public class LoginActivity extends AppCompatActivity {
                     }
             }
         });
+    }
+
+    private void storedata_of_user(String userEmail,String userPhone,String userid) {
+
+        ///////////////////////////////////////////////////
+        Map<String, Object> user_to_add = new HashMap<>();
+        user_to_add.put("email",userEmail);
+        user_to_add.put("phone",userPhone);
+        ///////////////////////////////////////////////////
+        db.collection("Users")
+                .document(userid)
+                .set(user_to_add)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+//                        Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
     }
 
     @Override
@@ -208,8 +237,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            /////ADD USER DATA INSIDE FIREBASE
-
+                            /////ADD USER DATA INSIDE FIREBASE ///////////
+                            UserPhone = (String) mAuth.getCurrentUser().getPhoneNumber();
+                            Userid = (String) mAuth.getCurrentUser().getUid();
+                            storedata_of_user("",UserPhone,Userid);
+                            //////ADD USER END HERE ///////////////////////
                             sendUserToHome();
                             // ...
                         } else {

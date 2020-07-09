@@ -88,7 +88,8 @@ public class HomeActivity extends AppCompatActivity {
                         break;
 
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+                getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
                 return true;
             }
         });

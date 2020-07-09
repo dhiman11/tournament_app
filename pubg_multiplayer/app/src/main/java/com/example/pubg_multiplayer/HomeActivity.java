@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         notifragment  = new NotificationsFragment();
         profileFragment = new ProfileFragment();
 
-        setFragment(homeFragment);
+        setFragment(profileFragment);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,R.id.profile_detail)
@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
 
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "TAG").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
                 return true;
             }
         });

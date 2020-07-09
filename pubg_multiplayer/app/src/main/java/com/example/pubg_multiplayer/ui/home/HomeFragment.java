@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,19 +42,24 @@ public class HomeFragment extends Fragment {
     RecyclerView mRecyclerView;
     ArrayList<Games> list;
     MygamesAdapter adapter;
+    private ProgressBar gamelist_progress_bar;
     private ImageButton image_log_out;
     private HomeViewModel homeViewModel;
     private LinearLayoutManager layoutManager;
+    private View rootView;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_main, container, false);
+           rootView = (View) inflater.inflate(R.layout.activity_main, container, false);
 //        rootView.setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.gamerecycleview);
         mRecyclerView.setLayoutManager( new LinearLayoutManager(getActivity()));
         image_log_out = (ImageButton) rootView.findViewById(R.id.image_log_out);
+
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -82,9 +88,11 @@ public class HomeFragment extends Fragment {
                             Toast.makeText(getActivity(), "Loading recycle view", Toast.LENGTH_SHORT).show();
                             mRecyclerView.setAdapter(adapter);
 
-
+                            gamelist_progress_bar = (ProgressBar) rootView.findViewById(R.id.progressBar_games_list);
+                            gamelist_progress_bar.setVisibility(View.INVISIBLE);
                         } else {
                             Log.d("MSGGGG", "Error getting documents: ", task.getException());
+
                         }
                     }
                 });

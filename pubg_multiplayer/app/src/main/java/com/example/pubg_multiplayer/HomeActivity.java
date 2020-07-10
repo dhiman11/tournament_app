@@ -1,38 +1,22 @@
 package com.example.pubg_multiplayer;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.DatePicker;
-import android.widget.ImageButton;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.example.pubg_multiplayer.adapter.MygamesAdapter;
 import com.example.pubg_multiplayer.model.Games;
 import com.example.pubg_multiplayer.ui.dashboard.DashboardFragment;
 import com.example.pubg_multiplayer.ui.home.HomeFragment;
 import com.example.pubg_multiplayer.ui.notifications.NotificationsFragment;
+import com.example.pubg_multiplayer.ui.play.PlayFragment;
 import com.example.pubg_multiplayer.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -40,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment dashboardFragment = new DashboardFragment();
     private Fragment notifragment  = new NotificationsFragment();
     private Fragment profileFragment = new ProfileFragment();
+    private Fragment playFragment = new PlayFragment();
 
 
     final FragmentManager fm = getSupportFragmentManager();
@@ -56,8 +41,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        fm.beginTransaction().add(R.id.nav_host_fragment, profileFragment, "4").hide(profileFragment).commit();
-        fm.beginTransaction().add(R.id.nav_host_fragment, notifragment, "3").hide(notifragment).commit();
+        fm.beginTransaction().add(R.id.nav_host_fragment, profileFragment, "5").hide(profileFragment).commit();
+        fm.beginTransaction().add(R.id.nav_host_fragment, notifragment, "4").hide(notifragment).commit();
+        fm.beginTransaction().add(R.id.nav_host_fragment, playFragment, "3").hide(playFragment).commit();
         fm.beginTransaction().add(R.id.nav_host_fragment, dashboardFragment, "2").hide(dashboardFragment).commit();
         fm.beginTransaction().add(R.id.nav_host_fragment,homeFragment, "1").commit();
 
@@ -74,6 +60,11 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.navigation_dashboard:
                         fm.beginTransaction().hide(active).show(dashboardFragment).commit();
                         active = dashboardFragment;
+                        return true;
+
+                    case R.id.navigation_play:
+                        fm.beginTransaction().hide(active).show(playFragment).commit();
+                        active = playFragment;
                         return true;
 
                     case R.id.navigation_notifications:

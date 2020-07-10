@@ -18,6 +18,13 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
+        android:id="@+id/navigation_play"
+        android:name="com.example.pubg_multiplayer.ui.play.PlayFragment"
+        android:label="@string/title_play"
+        tools:layout="@layout/fragment_play" />
+
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.pubg_multiplayer.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"

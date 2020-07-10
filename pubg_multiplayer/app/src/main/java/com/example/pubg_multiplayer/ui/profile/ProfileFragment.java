@@ -22,10 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pubg_multiplayer.R;
-import com.example.pubg_multiplayer.adapter.MygamesAdapter;
-import com.example.pubg_multiplayer.model.Games;
-import com.example.pubg_multiplayer.model.Profile;
-import com.example.pubg_multiplayer.ui.notifications.NotificationsViewModel;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +31,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
@@ -91,13 +90,16 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+
        if (profile_view == null) {
             profile_view = (View) inflater.inflate(R.layout.fragment_profile, container, false);
         }else {
            ((ViewGroup) profile_view.getParent()).removeView(profile_view);
        }
 
-
+        save_profile = (Button) profile_view.findViewById(R.id.update_profile);
+        save_profile.setEnabled(false);
+        save_profile.setBackgroundColor(Color.GRAY);
 
         return profile_view;
     }
@@ -106,13 +108,16 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
         load_profile_fragment_data();
 
 
 
         progressBar_profile = (ProgressBar) profile_view.findViewById(R.id.progressBar_profile);
         progressBar_profile.setVisibility(View.INVISIBLE);
-        save_profile = (Button) profile_view.findViewById(R.id.update_profile);
+
+
         save_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +146,38 @@ public class ProfileFragment extends Fragment {
                 user_data.put("phone", u_phone.getText().toString().trim());
 
 
+                user_id = mAuth.getCurrentUser().getUid();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference another_ref = db.collection("Users").document(user_id);
+                another_ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                            r_username = profile_view.findViewById(R.id.user_username);
+                            r_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
+                            r_email = profile_view.findViewById(R.id.user_email);
+                            r_name = profile_view.findViewById(R.id.user_name);
+                            r_phone = profile_view.findViewById(R.id.user_phone);
+                             username_top = profile_view.findViewById(R.id.username_top);
+
+                            String user_name = (String) documentSnapshot.getString("name");
+                            String user_username = (String)  documentSnapshot.getString("username");
+                            String user_phone = (String)  documentSnapshot.getString("phone");
+                            String UserEmailString = (String)  documentSnapshot.getString("email");
+                            String user_pubg_id = (String)  documentSnapshot.getString("pubgid");
+
+                            Log.d("Calling",user_name);
+                            /////LOAD DATA inside form
+                            r_name.setText(user_name);
+                            username_top.setText(user_name);
+                            r_email.setText(UserEmailString);
+                            r_username.setText(user_username);
+                            r_pubg_id.setText(user_pubg_id);
+                            r_phone.setText(user_phone);
+
+                        }
+                });
+                //////////////////Load data on load
                 db.collection("Users")
                         .document(mAuth.getCurrentUser().getUid())
                         .update(user_data)
@@ -177,7 +214,7 @@ public class ProfileFragment extends Fragment {
     private void load_profile_fragment_data() {
 
 
-
+        save_profile = (Button) profile_view.findViewById(R.id.update_profile);
         r_username = profile_view.findViewById(R.id.user_username);
         r_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
         r_email = profile_view.findViewById(R.id.user_email);
@@ -219,9 +256,6 @@ public class ProfileFragment extends Fragment {
                         String UserEmailString = (String)  document.getString("email");
                         String user_pubg_id = (String)  document.getString("pubgid");
 
-
-
-
                         /////LOAD DATA inside form
                         r_name.setText(user_name);
                         username_top.setText(user_name);
@@ -241,10 +275,19 @@ public class ProfileFragment extends Fragment {
                         if(user_username != null &&  !user_username.isEmpty()) {r_username.setEnabled(false); }
 
 
+
+                        save_profile.setEnabled(true);
+                        save_profile.setBackgroundColor(Color.BLUE);
+
                     } else {
                         Log.d("SUCCESSLOL", "No such document");
+                        save_profile.setEnabled(true);
+                        save_profile.setBackgroundColor(Color.BLUE);
+
                     }
                 } else {
+                    save_profile.setEnabled(true);
+                    save_profile.setBackgroundColor(Color.BLUE);
                     Log.d("FAILEDLOL", "get failed with ", task.getException());
                 }
             }

@@ -2,7 +2,6 @@ package com.example.pubg_multiplayer.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +82,7 @@ public class MygamesAdapter extends RecyclerView.Adapter<MygamesAdapter.MyViewHo
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.game_name);
             game_image = (ImageView) itemView.findViewById(R.id.game_image);
-            button = (Button) itemView.findViewById(R.id.play_now);
+            button = (Button) itemView.findViewById(R.id.join_now);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override

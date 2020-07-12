@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
                             }
 
                             adapter = new MygamesAdapter(getActivity(),list);
-                            Toast.makeText(getActivity(), "Loading recycle view", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "Loading recycle view", Toast.LENGTH_SHORT).show();
                             mRecyclerView.setAdapter(adapter);
 
                             gamelist_progress_bar = (ProgressBar) rootView.findViewById(R.id.progressBar_games_list);

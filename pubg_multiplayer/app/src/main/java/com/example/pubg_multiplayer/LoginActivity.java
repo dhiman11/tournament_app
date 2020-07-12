@@ -35,11 +35,14 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static android.text.TextUtils.isEmpty;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -115,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                System.out.print(e);
+//                System.out.print(e);
                 mLoginFeedbackText.setText("Verification Failed, please try again.");
                 mLoginFeedbackText.setVisibility(View.VISIBLE);
                 mLoginProgress.setVisibility(View.INVISIBLE);
@@ -204,23 +207,58 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void storedata_of_user(String userEmail,String userPhone,String userid) {
+    private void storedata_of_user(String userEmail, String userPhone, final String userid) {
 
         ///////////////////////////////////////////////////
-        Map<String, Object> user_to_add = new HashMap<>();
-        user_to_add.put("email",userEmail);
-        user_to_add.put("phone",userPhone);
+        final Map<String, Object> user_to_add = new HashMap<>();
+
+        if(!isEmpty(userEmail)){
+            user_to_add.put("email",userEmail);
+        }
+        if(!isEmpty(userEmail)){
+            user_to_add.put("phone",userPhone);
+        }
+
+
         ///////////////////////////////////////////////////
-        db.collection("Users")
-                .document(userid)
-                .set(user_to_add)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-//                        Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+        DocumentReference userid_esist = db.collection("Users").document(userid);
+
+        userid_esist.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ////////////////////Update
+                        db.collection("Users")
+                                .document(userid)
+                                .update(user_to_add)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                      //Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                    }else{
+                        //////////Add this data
+                        db.collection("Users")
+                            .document(userid)
+                            .set(user_to_add)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                     }
+                }else{
+                    Log.d("Failed","failed to save data");
+                }
+            }
+        });
 
-                });
+
     }
 
     @Override

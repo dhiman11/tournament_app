@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = homeFragment;
+    Fragment active = playFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,14 +39,13 @@ public class HomeActivity extends AppCompatActivity {
 
         ////My adapter /////////
 
-
-
         fm.beginTransaction().add(R.id.nav_host_fragment, profileFragment, "5").hide(profileFragment).commit();
         fm.beginTransaction().add(R.id.nav_host_fragment, notifragment, "4").hide(notifragment).commit();
-        fm.beginTransaction().add(R.id.nav_host_fragment, playFragment, "3").hide(playFragment).commit();
+        fm.beginTransaction().add(R.id.nav_host_fragment, playFragment, "3").commit();
         fm.beginTransaction().add(R.id.nav_host_fragment, dashboardFragment, "2").hide(dashboardFragment).commit();
-        fm.beginTransaction().add(R.id.nav_host_fragment,homeFragment, "1").commit();
+        fm.beginTransaction().add(R.id.nav_host_fragment,homeFragment, "1").hide(homeFragment).commit();
 
+        navigation.setSelectedItemId(R.id.navigation_play);
 
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

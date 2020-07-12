@@ -1,5 +1,7 @@
 package com.example.pubg_multiplayer.ui.profile;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,11 +18,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pubg_multiplayer.HomeActivity;
+import com.example.pubg_multiplayer.LoginActivity;
+import com.example.pubg_multiplayer.MainActivity;
 import com.example.pubg_multiplayer.R;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,6 +63,7 @@ public class ProfileFragment extends Fragment {
     private View profile_view;
     private String user_id;
     private String user_image_url;
+    private String user_pubg_id;
     private TextView username_top;
 
     private ProgressBar progressBar_profile;
@@ -80,12 +87,33 @@ public class ProfileFragment extends Fragment {
 
     ///User avatar
     private ImageView user_avtar;
+    private ImageButton logoutbtn;
 
 
     private Button save_profile;
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mCurrentUser == null){
+//            sendUserToLogin();
+        }
+    }
 
+//    private void sendUserToLogin() {
+//        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+//        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(loginIntent);
+//        getActivity().finish();
+//    }
+
+    private void sendUserToLogin() {
+        Intent loginOut = new Intent(getActivity(),LoginActivity.class);
+        startActivity(loginOut);
+        getActivity().finish();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +125,18 @@ public class ProfileFragment extends Fragment {
            ((ViewGroup) profile_view.getParent()).removeView(profile_view);
        }
 
+        /*Time to Logout start*/
+        logoutbtn = (ImageButton) profile_view.findViewById(R.id.logoutbtn);
+        logoutbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                sendUserToLogin();
+            }
+        });
+        /*Time to Logout end*/
+
+        ////LOGOUT ///
         save_profile = (Button) profile_view.findViewById(R.id.update_profile);
         save_profile.setEnabled(false);
         save_profile.setBackgroundColor(Color.GRAY);
@@ -116,6 +156,42 @@ public class ProfileFragment extends Fragment {
 
         progressBar_profile = (ProgressBar) profile_view.findViewById(R.id.progressBar_profile);
         progressBar_profile.setVisibility(View.INVISIBLE);
+
+        //////////////ON SERVER  CHANGES
+
+                    user_id = mAuth.getCurrentUser().getUid();
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference another_ref = db.collection("Users").document(user_id);
+                    another_ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                            r_username = profile_view.findViewById(R.id.user_username);
+                            r_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
+                            r_email = profile_view.findViewById(R.id.user_email);
+                            r_name = profile_view.findViewById(R.id.user_name);
+                            r_phone = profile_view.findViewById(R.id.user_phone);
+                            username_top = profile_view.findViewById(R.id.username_top);
+
+                            String user_name = (String) documentSnapshot.getString("name");
+                            String user_username = (String)  documentSnapshot.getString("username");
+                            String user_phone = (String)  documentSnapshot.getString("phone");
+                            String UserEmailString = (String)  documentSnapshot.getString("email");
+                            String user_pubg_id = (String)  documentSnapshot.getString("pubgid");
+
+            //                            Log.d("Calling",user_name);
+                            /////LOAD DATA inside form
+                            r_name.setText(user_name);
+                            username_top.setText(user_name);
+                            r_email.setText(UserEmailString);
+                            r_username.setText(user_username);
+                            r_pubg_id.setText(user_pubg_id);
+                            r_phone.setText(user_phone);
+
+                        }
+                    });
+
+        /////////////////
 
 
         save_profile.setOnClickListener(new View.OnClickListener() {
@@ -146,38 +222,10 @@ public class ProfileFragment extends Fragment {
                 user_data.put("phone", u_phone.getText().toString().trim());
 
 
-                user_id = mAuth.getCurrentUser().getUid();
+
+                //////////////////Load data on server changes
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference another_ref = db.collection("Users").document(user_id);
-                another_ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                            r_username = profile_view.findViewById(R.id.user_username);
-                            r_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
-                            r_email = profile_view.findViewById(R.id.user_email);
-                            r_name = profile_view.findViewById(R.id.user_name);
-                            r_phone = profile_view.findViewById(R.id.user_phone);
-                             username_top = profile_view.findViewById(R.id.username_top);
-
-                            String user_name = (String) documentSnapshot.getString("name");
-                            String user_username = (String)  documentSnapshot.getString("username");
-                            String user_phone = (String)  documentSnapshot.getString("phone");
-                            String UserEmailString = (String)  documentSnapshot.getString("email");
-                            String user_pubg_id = (String)  documentSnapshot.getString("pubgid");
-
-                            Log.d("Calling",user_name);
-                            /////LOAD DATA inside form
-                            r_name.setText(user_name);
-                            username_top.setText(user_name);
-                            r_email.setText(UserEmailString);
-                            r_username.setText(user_username);
-                            r_pubg_id.setText(user_pubg_id);
-                            r_phone.setText(user_phone);
-
-                        }
-                });
-                //////////////////Load data on load
                 db.collection("Users")
                         .document(mAuth.getCurrentUser().getUid())
                         .update(user_data)

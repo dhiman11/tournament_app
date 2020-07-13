@@ -1,500 +1,536 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8C8C8C"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp"
-    android:paddingRight="10dp"
-    tools:context=".GameDetail">
+    android:background="#8C8C8C">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout13"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="4dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            tools:layout_editor_absoluteX="92dp"
-            tools:layout_editor_absoluteY="9dp"
-            tools:srcCompat="@tools:sample/avatars" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout12"
-        android:layout_width="match_parent"
-        android:layout_height="493dp"
-        android:background="#656464"
+        android:layout_height="match_parent"
+        android:background="#8C8C8C"
+        android:isScrollContainer="true"
+        android:overScrollMode="always"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout13"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:id="@+id/textView34"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:text="Details"
-            android:textColor="@color/lightGray"
-            android:textSize="22dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView33" />
-
-        <TextView
-            android:id="@+id/textView33"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Room ID and password will appear once you register in event"
-            android:textColor="@color/disabledBtnBg"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView30" />
-
-        <TextView
-            android:id="@+id/textView30"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="8dp"
-            android:text="Room details"
-            android:textColor="@color/lightGray"
-            android:textSize="22dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
-
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="20dp"
-            android:text="Prizes"
-            android:textColor="@color/lightGray"
-            android:textSize="22dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
-
-        <TextView
-            android:id="@+id/game_title"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="16dp"
-            android:text="-"
-            android:textColor="@color/lightGray"
-            android:textSize="22dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:paddingTop="10dp"
+        android:paddingRight="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="97dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/background_color"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout11"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
-
-            <TextView
-                android:id="@+id/team"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Server"
-                android:textColor="@color/disabledBtnBg"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="6dp" />
-
-            <TextView
-                android:id="@+id/server_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="-"
-                android:textColor="@color/lightGray"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/team" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout11"
-            android:layout_width="97dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/background_color"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/team"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="Team"
-                android:textColor="@color/disabledBtnBg"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="DuplicateIds" />
-
-            <TextView
-                android:id="@+id/team_val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="-"
-                android:textColor="@color/lightGray"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/team"
-                tools:ignore="DuplicateIds" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout9"
-            android:layout_width="97dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/background_color"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout10"
-            app:layout_constraintTop_toBottomOf="@+id/textView34"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/team"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:text="Game"
-                android:textColor="@color/disabledBtnBg"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="DuplicateIds" />
-
-            <TextView
-                android:id="@+id/game_val_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="-"
-                android:textColor="@color/lightGray"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/team"
-                tools:ignore="DuplicateIds" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout7"
+            android:id="@+id/constraintLayout13"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:paddingTop="10dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="4dp"
+            android:background="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/game_title">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout4"
-                android:layout_width="120dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="4dp"
-                android:background="@color/background_color"
-                app:layout_constraintEnd_toStartOf="@+id/constraintLayout5"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toEndOf="@+id/constraintLayout6"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_calendar_today_detail_page" />
-
-                <TextView
-                    android:id="@+id/textView25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Date and Time"
-                    android:textColor="@color/disabledBtnBg"
-                    android:textSize="10sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView14"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/match_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:text="-"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView14"
-                    app:layout_constraintTop_toBottomOf="@+id/textView25"
-                    app:layout_constraintVertical_bias="0.0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout6"
-                android:layout_width="120dp"
-                android:layout_height="70dp"
-                android:background="@color/background_color"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="30sp"
-                    android:layout_height="30sp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_account_balance_detail_page" />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Entry Fees"
-                    android:textColor="@color/disabledBtnBg"
-                    android:textSize="10sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView11"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/entry_fees"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:text="-"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView11"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
-                android:layout_width="120dp"
-                android:layout_height="70dp"
-                android:background="@color/background_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_people_detail_page" />
-
-                <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Participants"
-                    android:textColor="@color/disabledBtnBg"
-                    android:textSize="10sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView15"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/particpant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="-"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView15"
-                    app:layout_constraintTop_toBottomOf="@+id/textView27"
-                    app:layout_constraintVertical_bias="0.0" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:layout_editor_absoluteX="92dp"
+                tools:layout_editor_absoluteY="9dp"
+                tools:srcCompat="@tools:sample/avatars" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout8"
+            android:id="@+id/constraintLayout12"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="550dp"
+            android:background="#656464"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView29">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout13"
+            app:layout_constraintVertical_bias="0.0">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout6"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/background_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="31dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.47"
-                    app:srcCompat="@drawable/indian_rupe" />
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Winner Price"
-                    android:textColor="@color/disabledBtnBg"
-                    android:textSize="10sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/winning_price_val"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:text="-"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView21"
-                    app:layout_constraintVertical_bias="0.0" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout6"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/background_color"
-                app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:text="Details"
+                android:textColor="@color/lightGray"
+                android:textSize="22dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="31dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.47"
-                    app:srcCompat="@drawable/indian_rupe" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Price per Kill"
-                    android:textColor="@color/disabledBtnBg"
-                    android:textSize="10sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/per_kill_val"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:text="-"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2"
-                    app:layout_constraintVertical_bias="0.0" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout10"
-            android:layout_width="97dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/background_color"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView34">
+                app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
             <TextView
-                android:id="@+id/team"
+                android:id="@+id/textView33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:text="Game Map"
+                android:layout_marginTop="12dp"
+                android:text="Room ID and password will appear once you register in event"
                 android:textColor="@color/disabledBtnBg"
                 android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:text="Room details"
+                android:textColor="@color/lightGray"
+                android:textSize="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:text="Prizes"
+                android:textColor="@color/lightGray"
+                android:textSize="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
+
+            <TextView
+                android:id="@+id/game_title"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="16dp"
+                android:text="-"
+                android:textColor="@color/lightGray"
+                android:textSize="22dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/game_map_val"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout14"
+                android:layout_width="97dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_color"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout11"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
+
+                <TextView
+                    android:id="@+id/team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Server"
+                    android:textColor="@color/disabledBtnBg"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="6dp" />
+
+                <TextView
+                    android:id="@+id/server_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="-"
+                    android:textColor="@color/lightGray"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/team" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout11"
+                android:layout_width="97dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Team"
+                    android:textColor="@color/disabledBtnBg"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+                <TextView
+                    android:id="@+id/team_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="-"
+                    android:textColor="@color/lightGray"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/team"
+                    tools:ignore="DuplicateIds" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout9"
+                android:layout_width="97dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_color"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout10"
+                app:layout_constraintTop_toBottomOf="@+id/textView34"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Game"
+                    android:textColor="@color/disabledBtnBg"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="DuplicateIds" />
+
+                <TextView
+                    android:id="@+id/game_val_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="-"
+                    android:textColor="@color/lightGray"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/team"
+                    tools:ignore="DuplicateIds" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:paddingTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/game_title">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout4"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@color/background_color"
+                    app:layout_constraintEnd_toStartOf="@+id/constraintLayout5"
+                    app:layout_constraintHorizontal_bias="0.75"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout6"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView14"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_calendar_today_detail_page" />
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Date and Time"
+                        android:textColor="@color/disabledBtnBg"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView14"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/match_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="-"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView14"
+                        app:layout_constraintTop_toBottomOf="@+id/textView25"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout6"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:background="@color/background_color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_marginStart="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_account_balance_detail_page" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Entry Fees"
+                        android:textColor="@color/disabledBtnBg"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView11"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/entry_fees"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="-"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView11"
+                        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout5"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:background="@color/background_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView15"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_people_detail_page" />
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Participants"
+                        android:textColor="@color/disabledBtnBg"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView15"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/particpant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="-"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView15"
+                        app:layout_constraintTop_toBottomOf="@+id/textView27"
+                        app:layout_constraintVertical_bias="0.0" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView29">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout6"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/background_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView12"
+                        android:layout_width="31dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.47"
+                        app:srcCompat="@drawable/indian_rupe" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="44dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Winner Price"
+                        android:textColor="@color/disabledBtnBg"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/winning_price_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="44dp"
+                        android:text="-"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView21"
+                        app:layout_constraintVertical_bias="0.0" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout6"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/background_color"
+                    app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="31dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.47"
+                        app:srcCompat="@drawable/indian_rupe" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="44dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Price per Kill"
+                        android:textColor="@color/disabledBtnBg"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/per_kill_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="44dp"
+                        android:text="-"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2"
+                        app:layout_constraintVertical_bias="0.0" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout10"
+                android:layout_width="97dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/background_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView34">
+
+                <TextView
+                    android:id="@+id/team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Game Map"
+                    android:textColor="@color/disabledBtnBg"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/game_map_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="-"
+                    android:textColor="@color/lightGray"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/team" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="-"
-                android:textColor="@color/lightGray"
-                android:textSize="10sp"
-                android:textStyle="bold"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="530dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="104dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/team" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
+
+                <Button
+                    android:id="@+id/join_button"
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:clickable="true"
+                    android:text="+ JOIN NOW"
+                    android:textColor="#FFFFFF" />
+            </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</ScrollView>

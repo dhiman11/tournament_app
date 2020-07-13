@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,11 +31,12 @@ import java.util.TimeZone;
 public class GameDetail extends AppCompatActivity {
 
 
-    private String document_key;
+    private String document_key,entry_fee;
+    private Button join_button;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-    private ImageView image_view;
+    private ImageView image_view,game;
     private TextView game_name,game_map_val,game_val,team_val,server_name,entry_fees,particpant,per_kill_str,winning_price,match_date_val;
 
     @Override
@@ -62,7 +65,7 @@ public class GameDetail extends AppCompatActivity {
                         String participants = Tournament_list.getParticipants().toString();
                         String winning_price_val =  Tournament_list.getWinning_price().toString();
 
-                        String entry_fee = (String) document.getString("entry_fee");
+                        final String entry_fee = (String) document.getString("entry_fee");
                         String game = (String)  document.getString("game");
                         String game_id = (String)  document.getString("game_id");
                         String game_map = (String)  document.getString("game_map");
@@ -113,6 +116,18 @@ public class GameDetail extends AppCompatActivity {
                         image_view = findViewById(R.id.image_view);
                         Picasso.get().load(image).into(image_view);
 
+
+
+                        join_button = (Button) findViewById(R.id.join_button);
+                        join_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d("message",entry_fee);
+                            }
+                        });
+
+
+
                     }
                 }else {
                     Log.d("SUCCESSLOL", "No such document");
@@ -123,6 +138,7 @@ public class GameDetail extends AppCompatActivity {
 
 
 //        Toast.makeText(this, document_key, Toast.LENGTH_SHORT).show();
+
 
 
 

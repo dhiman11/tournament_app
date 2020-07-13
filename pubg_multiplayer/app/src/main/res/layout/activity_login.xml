@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:isScrollContainer="true"
+    android:overScrollMode="always"
+    android:scrollbars="vertical"
     tools:context=".LoginActivity">
 
     <Button
@@ -138,6 +148,15 @@
         app:layout_constraintTop_toBottomOf="@+id/google_sign_in"
         tools:layout_editor_absoluteX="165dp" />
 
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@+id/generate_btn"
+        tools:layout_editor_absoluteX="1dp" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_sign_in"
         android:layout_width="142dp"
@@ -148,13 +167,5 @@
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         tools:ignore="MissingConstraints" />
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/generate_btn"
-        tools:layout_editor_absoluteX="1dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

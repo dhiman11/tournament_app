@@ -8,6 +8,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pubg_multiplayer.model.Tournament_detail;
+import com.example.pubg_multiplayer.model.Tournament_list;
+import com.google.android.gms.games.event.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -17,7 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -46,12 +51,16 @@ public class GameDetail extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
+
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 
-                        Integer per_kill =  document.getDI("per_kill");
-//                        document.getString("per_kill");
+//                       System.out.print(document.get("per_kill", Tournament_detail.class));
+                        Tournament_detail Tournament_list =  document.toObject(Tournament_detail.class);
 
+                        String per_kill_val = Tournament_list.getPer_kill().toString();
+                        String participants = Tournament_list.getParticipants().toString();
+                        String winning_price_val =  Tournament_list.getWinning_price().toString();
 
                         String entry_fee = (String) document.getString("entry_fee");
                         String game = (String)  document.getString("game");
@@ -59,9 +68,9 @@ public class GameDetail extends AppCompatActivity {
                         String game_map = (String)  document.getString("game_map");
                         String image = (String)  document.getString("image");
                         String name = (String)  document.getString("name");
-                        String participants = (String)  document.getString("participants");
 
-                        String winning_price_val = (String)   document.getString("winning_price");
+
+
                         String room_detail = (String)  document.getString("room_detail");
                         String server = (String)  document.getString("server");
                         String team = (String)  document.getString("team");
@@ -84,7 +93,7 @@ public class GameDetail extends AppCompatActivity {
 
                         game_name.setText(name);
 
-                        System.out.println(per_kill);
+//                        System.out.println(per_kill);
 
                         game_map_val.setText(game_map);
                         game_val.setText(game);
@@ -92,7 +101,7 @@ public class GameDetail extends AppCompatActivity {
                         server_name.setText(server);
                         entry_fees.setText(entry_fee);
                         particpant.setText(participants);
-                        per_kill_str.setText(per_kill);
+                        per_kill_str.setText(per_kill_val);
                         winning_price.setText(winning_price_val);
 
                         /////SET UPCOMING DATAE

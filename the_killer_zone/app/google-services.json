@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "446878380673",
+    "firebase_url": "https://tournament-5d1ef.firebaseio.com",
+    "project_id": "tournament-5d1ef",
+    "storage_bucket": "tournament-5d1ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446878380673:android:82ec1f346699bc39ed1380",
+        "android_client_info": {
+          "package_name": "com.dhimanstudio.the_killer_zone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446878380673-i23pkp11g3dqdg44p7k3ens5chpar6u7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dhimanstudio.the_killer_zone",
+            "certificate_hash": "bc26d2112e7845dea253cd135466707a4fc21f6d"
+          }
+        },
+        {
+          "client_id": "446878380673-dimaj40r48u0ti15ekufl8qsav7idg3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVbdZuHW1Gq0PYVMG3CAWZ3dezVQ_Q0VY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446878380673-b51q645udnmidolmcv1ujjdk8lfjmtoc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,7 @@ package com.dhimanstudio.the_killer_zone;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
 
 import com.dhimanstudio.pubg_multiplayer.R;
 import com.dhimanstudio.the_killer_zone.model.Tournament_detail;
+import com.google.android.gms.common.api.Response;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -23,6 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 import com.payumoney.core.PayUmoneySdkInitializer;
 
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -121,41 +129,11 @@ public class GameDetail extends AppCompatActivity {
                         join_button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
-//                                /* PAYMENT code here */
 
-                                builder.setAmount("10")                          // Payment amount
-                                        .setTxnId("oder_123")                                             // Transaction ID
-                                        .setPhone("7087294676")                                           // User Phone number
-                                        .setProductName("pubg_game")                   // Product Name or description
-                                        .setFirstName("Akshay")                              // User First name
-                                        .setEmail("dhimanvlogs@gmail.com")                                            // User Email ID
-                                        .setsUrl("#")                    // Success URL (surl)
-                                        .setfUrl("#")                     //Failure URL (furl)
-                                        .setUdf1("")
-                                        .setUdf2("")
-                                        .setUdf3("")
-                                        .setUdf4("")
-                                        .setUdf5("")
-                                        .setUdf6("")
-                                        .setUdf7("")
-                                        .setUdf8("")
-                                        .setUdf9("")
-                                        .setUdf10("")
-                                        .setIsDebug(true)                              // Integration environment - true (Debug)/ false(Production)
-                                        .setKey("KWCRzGYb")                        // Merchant key
-                                        .setMerchantId("6779961");             // Merchant ID
-
-
-                                //declare paymentParam object
-                                try {
-                                    PayUmoneySdkInitializer.PaymentParam paymentParam = builder.build();
-//                                    paymentParam.setMerchantHash(hash);
-                                      Toast.makeText(GameDetail.this, "Get the hash", Toast.LENGTH_SHORT).show();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
+                                Intent paymentintent = new Intent(GameDetail.this, PaymentActivity.class);
+                                paymentintent.putExtra("payment",entry_fee);
+                                paymentintent.putExtra("secondKeyName","SecondKeyValue");
+                                startActivity(paymentintent);
 
                             }
                         });
@@ -171,10 +149,6 @@ public class GameDetail extends AppCompatActivity {
 
 
 
-//        Toast.makeText(this, document_key, Toast.LENGTH_SHORT).show();
-
-
-
 
     }
 
@@ -182,6 +156,8 @@ public class GameDetail extends AppCompatActivity {
 
 
 
+
+    /* GET DATE */
     private String get_date_oftournament(Date date) {
         String formattedDate;
         try{
@@ -196,6 +172,9 @@ public class GameDetail extends AppCompatActivity {
 
         return formattedDate;
     }
+
+
+
 
 
 

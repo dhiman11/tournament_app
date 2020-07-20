@@ -6,13 +6,28 @@ public class Profile {
     private String email;
     private String phone;
     private String pubgid;
+    private Integer wallet_amount;
 
-    public Profile(String name, String username, String email, String phone, String pubgid) {
+
+
+    public Profile(String name, String username, String email, String phone, String pubgid,Integer wallet_amount) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.phone = phone;
         this.pubgid = pubgid;
+        this.wallet_amount = wallet_amount;
+    }
+
+    public Profile() {
+    }
+
+    public Integer getWallet_amount() {
+        return wallet_amount;
+    }
+
+    public void setWallet_amount(Integer wallet_amount) {
+        this.wallet_amount = wallet_amount;
     }
 
     public String getName() {

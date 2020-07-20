@@ -19,8 +19,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.dhimanstudio.the_killer_zone.GameDetail;
 import com.dhimanstudio.the_killer_zone.LoginActivity;
 import com.dhimanstudio.pubg_multiplayer.R;
+import com.dhimanstudio.the_killer_zone.PaymentActivity;
+import com.dhimanstudio.the_killer_zone.WalletDetail;
+import com.dhimanstudio.the_killer_zone.model.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,11 +55,12 @@ public class ProfileFragment extends Fragment {
     private View profile_view;
     private String user_id;
     private String user_image_url;
+    private ImageButton wallet_image_click;
     private String user_pubg_id;
-    private TextView username_top;
-
+//    private TextView username_top;
+    private TextView wallet_amount;
     private ProgressBar progressBar_profile;
- 
+    private  String wallet_money_string;
     ////VEIW ELEMENTS
     private EditText r_username;
     private EditText r_email;
@@ -113,8 +118,12 @@ public class ProfileFragment extends Fragment {
            ((ViewGroup) profile_view.getParent()).removeView(profile_view);
        }
 
+
+        wallet_image_click = (ImageButton) profile_view.findViewById(R.id.wallet_image_click);
+        wallet_amount = (TextView) profile_view.findViewById(R.id.wallet_amount);
         /*Time to Logout start*/
         logoutbtn = (ImageButton) profile_view.findViewById(R.id.logoutbtn);
+
         logoutbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,18 +157,23 @@ public class ProfileFragment extends Fragment {
         //////////////ON SERVER  CHANGES
 
                     user_id = mAuth.getCurrentUser().getUid();
+
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     DocumentReference another_ref = db.collection("Users").document(user_id);
                     another_ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
+
+
+
                             r_username = profile_view.findViewById(R.id.user_username);
                             r_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
                             r_email = profile_view.findViewById(R.id.user_email);
                             r_name = profile_view.findViewById(R.id.user_name);
                             r_phone = profile_view.findViewById(R.id.user_phone);
-                            username_top = profile_view.findViewById(R.id.username_top);
+//                            username_top = profile_view.findViewById(R.id.username_top);
+
 
                             String user_name = (String) documentSnapshot.getString("name");
                             String user_username = (String)  documentSnapshot.getString("username");
@@ -167,10 +181,16 @@ public class ProfileFragment extends Fragment {
                             String UserEmailString = (String)  documentSnapshot.getString("email");
                             String user_pubg_id = (String)  documentSnapshot.getString("pubgid");
 
-            //                            Log.d("Calling",user_name);
+                            Profile p = documentSnapshot.toObject(Profile.class);
+
+                            Integer wallet_money = p.getWallet_amount();
+
+                            wallet_money_string  = wallet_money.toString();
+                            wallet_amount.setText(" ₹"+wallet_money_string);
+
                             /////LOAD DATA inside form
                             r_name.setText(user_name);
-                            username_top.setText(user_name);
+//                            username_top.setText(user_name);
                             r_email.setText(UserEmailString);
                             r_username.setText(user_username);
                             r_pubg_id.setText(user_pubg_id);
@@ -179,27 +199,38 @@ public class ProfileFragment extends Fragment {
                         }
                     });
 
-        /////////////////
 
 
+        /* Wallet Redirect start */
+        wallet_amount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                go_to_wallet_page();
+            }
+        });
+        wallet_image_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                go_to_wallet_page();
+            }
+        });
+        /* Wallet Redirect end */
+
+
+        /* Save profile */
         save_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //Progressbar
                 progressBar_profile.setVisibility(View.VISIBLE);
-
                 ///Message box
                 message_box_profile = profile_view.findViewById(R.id.message_box_profile);
-
                 u_username = profile_view.findViewById(R.id.user_username);
                 u_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
                 u_email = profile_view.findViewById(R.id.user_email);
                 u_name = profile_view.findViewById(R.id.user_name);
                 u_phone = profile_view.findViewById(R.id.user_phone);
-
-
-
 
                 final  Map<String, Object> user_data = new HashMap<>();
 
@@ -208,8 +239,6 @@ public class ProfileFragment extends Fragment {
                 user_data.put("email", u_email.getText().toString().trim());
                 user_data.put("name", u_name.getText().toString().trim());
                 user_data.put("phone", u_phone.getText().toString().trim());
-
-
 
                 //////////////////Load data on server changes
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -235,7 +264,6 @@ public class ProfileFragment extends Fragment {
                                 message_box_profile.setTextColor(Color.RED);
                             }
                         });
-
             }
         });
 
@@ -243,13 +271,18 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    /* Wallet redirect */
+    private void go_to_wallet_page() {
+        Intent paymentintent = new Intent(getActivity(), WalletDetail.class);
+        paymentintent.putExtra("wallet_amount",wallet_money_string.toString());
+        paymentintent.putExtra("user_id",mAuth.getCurrentUser().getUid());
+        startActivity(paymentintent);
+    }
 
 
 
-
+    /* Load profile data */
     private void load_profile_fragment_data() {
-
-
         save_profile = (Button) profile_view.findViewById(R.id.update_profile);
         r_username = profile_view.findViewById(R.id.user_username);
         r_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
@@ -259,7 +292,7 @@ public class ProfileFragment extends Fragment {
 
         ///GEt user_avatar
         user_avtar = profile_view.findViewById(R.id.user_avtar);
-        username_top = profile_view.findViewById(R.id.username_top);
+//        username_top = profile_view.findViewById(R.id.username_top);
 
         try{
             user_image_url = (String) mAuth.getCurrentUser().getPhotoUrl().toString();
@@ -285,6 +318,12 @@ public class ProfileFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 
+                        Profile profile_data = document.toObject(Profile.class);
+
+                        Integer wallet_mone = profile_data.getWallet_amount();
+                        wallet_money_string  = wallet_mone.toString();
+
+                        wallet_amount.setText(" ₹"+wallet_money_string);
 
                         String user_name = (String) document.getString("name");
                         String user_username = (String)  document.getString("username");
@@ -294,7 +333,7 @@ public class ProfileFragment extends Fragment {
 
                         /////LOAD DATA inside form
                         r_name.setText(user_name);
-                        username_top.setText(user_name);
+//                        username_top.setText(user_name);
                         r_email.setText(UserEmailString);
                         r_username.setText(user_username);
                         r_pubg_id.setText(user_pubg_id);

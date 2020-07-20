@@ -2,7 +2,9 @@ package com.dhimanstudio.the_killer_zone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.SSLCertificateSocketFactory;
 import android.os.AsyncTask;
@@ -23,6 +25,7 @@ import com.payumoney.core.PayUmoneySdkInitializer;
 
 import com.payumoney.core.entity.TransactionResponse;
 import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
+import com.payumoney.sdkui.ui.utils.ResultModel;
 
 
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
@@ -49,15 +52,11 @@ import retrofit2.Response;
 public class PaymentActivity extends AppCompatActivity {
     private PayUmoneySdkInitializer.PaymentParam mPaymentParams;
     private AppPreference mAppPreference;
+    public static final String TAG = "PaymentActivity : ";
 
     PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
     //declare paymentParam object
     PayUmoneySdkInitializer.PaymentParam paymentParam = null;
-
-    String TAG ="mainActivity", txnid ="txt12346", amount ="20", phone ="9144040888",
-            prodname ="BlueApp Course", firstname ="kamal", email ="kamal.bunkar07@gmail.com",
-            merchantId ="6779961", merchantkey="KWCRzGYb";  //   first test key only
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +103,8 @@ public class PaymentActivity extends AppCompatActivity {
         String udf8 = "";
         String udf9 = "";
         String udf10 = "";
+        String merchantId ="6779961";
+        String merchantkey="KWCRzGYb";
 
 //        AppEnvironment appEnvironment = ((BaseApplication) getApplication()).getAppEnvironment();
         builder.setAmount("10")
@@ -112,8 +113,8 @@ public class PaymentActivity extends AppCompatActivity {
                 .setProductName(productName)
                 .setFirstName(firstName)
                 .setEmail(email)
-                .setsUrl("#")
-                .setfUrl("#")
+                .setsUrl("https://www.payumoney.com/mobileapp/payumoney/success.php")
+                .setfUrl("https://www.payumoney.com/mobileapp/payumoney/failure.php")
                 .setUdf1(udf1)
                 .setUdf2(udf2)
                 .setUdf3(udf3)
@@ -125,8 +126,8 @@ public class PaymentActivity extends AppCompatActivity {
                 .setUdf9(udf9)
                 .setUdf10(udf10)
                 .setIsDebug(true)
-                .setKey("KWCRzGYb")
-                .setMerchantId("6779961");
+                .setKey(merchantkey)
+                .setMerchantId(merchantId);
 
         try {
             mPaymentParams = builder.build();
@@ -197,6 +198,7 @@ public class PaymentActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Toast.makeText(PaymentActivity.this, "Please wait...", Toast.LENGTH_SHORT).show();
             //            progressDialog = new ProgressDialog(PaymentActivity.this);
             //            progressDialog.setMessage("Please wait...");
             //            progressDialog.show();
@@ -208,10 +210,11 @@ public class PaymentActivity extends AppCompatActivity {
             String merchantHash = "";
             try {
                 //TODO Below url is just for testing purpose, merchant needs to replace this with their server side hash generation url
-                URL url = new URL("https://www.mobilesdetail.com/killerzone/response_hash.php");
+//                URL url = new URL("https://www.mobilesdetail.com/killerzone/response_hash.php");
+                URL url = new URL("https://www.mobilesdetail.com/killerzone/new_hash.php");
+
 
                 String postParam = postParams[0];
-
 
                 byte[] postParamsByte = postParam.getBytes("UTF-8");
 
@@ -229,29 +232,31 @@ public class PaymentActivity extends AppCompatActivity {
 
                 InputStream responseInputStream = conn.getInputStream();
                 StringBuffer responseStringBuffer = new StringBuffer();
+
+
                 byte[] byteContainer = new byte[1024];
                 for (int i; (i = responseInputStream.read(byteContainer)) != -1; ) {
                     responseStringBuffer.append(new String(byteContainer, 0, i));
                 }
 
+                JSONObject response = new JSONObject("{payment_hash:"+responseStringBuffer.toString()+"}");
 
 
 
-                JSONObject response = new JSONObject(responseStringBuffer.toString());
 
                 Iterator<String> payuHashIterator = response.keys();
+
                 while (payuHashIterator.hasNext()) {
                     String key = payuHashIterator.next();
 
-//                    System.out.print(key);
 
                     switch (key) {
                         /**
                          * This hash is mandatory and needs to be generated from merchant's server side
                          *
                          */
-                        case "D/hash":
-//                        case "payment_hash":
+//                        case "D/hash":
+                        case "payment_hash":
                             merchantHash = response.getString(key);
                             break;
                         default:
@@ -261,10 +266,13 @@ public class PaymentActivity extends AppCompatActivity {
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+                System.out.print("MalformedURLException");
             } catch (ProtocolException e) {
                 e.printStackTrace();
+                System.out.print("ProtocolException");
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.print("IOException");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -281,7 +289,7 @@ public class PaymentActivity extends AppCompatActivity {
             //            progressDialog.dismiss();
             //            payNowButton.setEnabled(true);
 
-//            System.out.print(merchantHash);
+
 
             if (merchantHash.isEmpty() || merchantHash.equals("")) {
                 Toast.makeText(PaymentActivity.this, "Could not generate hash", Toast.LENGTH_SHORT).show();
@@ -354,6 +362,58 @@ public class PaymentActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException ignored) {
         }
         return hexString.toString();
+    }
+
+
+
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result Code is -1 send from Payumoney activity
+        Log.d("PaymentActivity", "request code " + requestCode + " resultcode " + resultCode);
+        if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data !=
+                null) {
+            TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager
+                    .INTENT_EXTRA_TRANSACTION_RESPONSE);
+
+            ResultModel resultModel = data.getParcelableExtra(PayUmoneyFlowManager.ARG_RESULT);
+
+            // Check which object is non-null
+            if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
+                if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
+                    //Success Transaction
+                    Log.d("payment","Transaction SUCCESS");
+                } else {
+                    //Failure Transaction
+                    Log.d("payment","Transaction FAILED");
+                }
+
+                // Response from Payumoney
+                String payuResponse = transactionResponse.getPayuResponse();
+
+                // Response from SURl and FURL
+                String merchantResponse = transactionResponse.getTransactionDetails();
+
+                new AlertDialog.Builder(this)
+                        .setCancelable(false)
+                        .setMessage("Payu's Data : " + payuResponse + "\n\n\n Merchant's Data: " + merchantResponse)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+
+            } else if (resultModel != null && resultModel.getError() != null) {
+                Log.d(TAG, "Error response : " + resultModel.getError().getTransactionResponse());
+            } else {
+                Log.d(TAG, "Both objects are null!");
+            }
+        }
     }
 
 

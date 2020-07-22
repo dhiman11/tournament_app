@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -137,6 +138,15 @@ public class ProfileFragment extends Fragment {
         save_profile = (Button) profile_view.findViewById(R.id.update_profile);
         save_profile.setEnabled(false);
         save_profile.setBackgroundColor(Color.GRAY);
+
+
+
+        profile_view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
 
         return profile_view;
     }
@@ -349,20 +359,18 @@ public class ProfileFragment extends Fragment {
                         if(user_phone != null &&  !user_phone.isEmpty()) {r_phone.setEnabled(false); }
                         if(user_username != null &&  !user_username.isEmpty()) {r_username.setEnabled(false); }
 
-
-
                         save_profile.setEnabled(true);
-                        save_profile.setBackgroundColor(Color.BLUE);
+                        save_profile.setBackgroundColor(Color.parseColor("#FF03DAC5"));
 
                     } else {
                         Log.d("SUCCESSLOL", "No such document");
                         save_profile.setEnabled(true);
-                        save_profile.setBackgroundColor(Color.BLUE);
+                        save_profile.setBackgroundColor(Color.parseColor("#FF03DAC5"));
 
                     }
                 } else {
                     save_profile.setEnabled(true);
-                    save_profile.setBackgroundColor(Color.BLUE);
+                    save_profile.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                     Log.d("FAILEDLOL", "get failed with ", task.getException());
                 }
             }

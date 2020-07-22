@@ -47,11 +47,24 @@ public class MygamesAdapter extends RecyclerView.Adapter<MygamesAdapter.MyViewHo
         Picasso.get().load(games.get(position).getImage()).into(holder.game_image) ;
 
 
+        holder.game_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ////LOAD A NEW FRAGMENT?//////////
+                try {
+                    Intent i = new Intent(context, GamesSubList.class);
+                    i.putExtra("doc", games.get(position).getUid());
+                    context.startActivity(i);
+                } catch (ClassCastException e) {
 
+                }
+
+            }
+        });
+        ///////////////////////////////////////////////////////////
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 ////LOAD A NEW FRAGMENT?//////////
                 try {
                     Intent i = new Intent(context, GamesSubList.class);

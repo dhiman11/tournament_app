@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,13 +18,16 @@ import com.dhimanstudio.pubg_multiplayer.R;
 import com.dhimanstudio.the_killer_zone.adapter.MygamesListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PlayFragment extends Fragment {
 
@@ -51,8 +55,10 @@ public class PlayFragment extends Fragment {
 
 
         /*GET Tournament list*/
-
+        Timestamp currentDate = Timestamp.now();
         db.collection("Tournaments")
+                .orderBy("tournament_start_date")
+                .whereGreaterThan("tournament_start_date",currentDate.toDate())
                 .get()
 
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -75,6 +81,19 @@ public class PlayFragment extends Fragment {
                 });
 
 
+
+        playrootView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+
+
         return playrootView;
     }
+
+
+
+
 }

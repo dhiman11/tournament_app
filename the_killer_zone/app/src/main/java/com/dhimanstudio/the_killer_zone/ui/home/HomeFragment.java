@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -44,25 +45,14 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-           rootView = (View) inflater.inflate(R.layout.activity_main, container, false);
-//        rootView.setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.gamerecycleview);
-        mRecyclerView.setLayoutManager( new LinearLayoutManager(getActivity()));
-//        image_log_out = (ImageButton) rootView.findViewById(R.id.image_log_out_btn);
-
-        mAuth = FirebaseAuth.getInstance();
-        mCurrentUser = mAuth.getCurrentUser();
+    rootView = (View) inflater.inflate(R.layout.activity_main, container, false);
+    mRecyclerView = (RecyclerView) rootView.findViewById(R.id.gamerecycleview);
+    mRecyclerView.setLayoutManager( new LinearLayoutManager(getActivity()));
+    mAuth = FirebaseAuth.getInstance();
+    mCurrentUser = mAuth.getCurrentUser();
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-//        image_log_out.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mAuth.signOut();
-//                sendUserToLogin();
-//            }
-//        });
 
         db.collection("Games")
                 .get()
@@ -89,6 +79,16 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
+
+
+        rootView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+
+
 
         return rootView;
 

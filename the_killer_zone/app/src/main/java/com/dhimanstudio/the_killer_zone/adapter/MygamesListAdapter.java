@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.dhimanstudio.the_killer_zone.GameDetail;
 import com.dhimanstudio.the_killer_zone.model.Tournament_list;
 import com.dhimanstudio.pubg_multiplayer.R;
+import com.google.firebase.Timestamp;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -47,11 +48,11 @@ public class MygamesListAdapter extends RecyclerView.Adapter<MygamesListAdapter.
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
 
-        Date date = new Date(Tournament_list.get(position).getTournament_start_date().getSeconds());
+        Timestamp date =  Tournament_list.get(position).getTournament_start_date();
 
 
 
-        tournament_date = get_date_oftournament(date);
+        tournament_date = get_date_oftournament(date.toDate());
 
         holder.sub_detail.setText("On "+tournament_date+" - ENTRY: ₹"+ Tournament_list.get(position).getEntry_fee()+" - "+Tournament_list.get(position).getTeam()+" - "+Tournament_list.get(position).getGame_map());
         holder.name.setText(Tournament_list.get(position).getName());
@@ -79,12 +80,12 @@ public class MygamesListAdapter extends RecyclerView.Adapter<MygamesListAdapter.
     private String get_date_oftournament(Date date) {
         String formattedDate;
         try{
-            SimpleDateFormat sdf = new SimpleDateFormat("d,MMMM h:mm,a", Locale.ENGLISH);
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                SimpleDateFormat sdf = new SimpleDateFormat("d,MMMM h:mm,a", Locale.ENGLISH);
+                sdf.setTimeZone(TimeZone.getTimeZone("IST"));
                 formattedDate = sdf.format(date);
         }catch (Exception e){
             SimpleDateFormat sdf = new SimpleDateFormat("d,MMMM h:mm,a", Locale.ENGLISH);
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            sdf.setTimeZone(TimeZone.getTimeZone("IST"));
                 formattedDate = "";
         }
 

@@ -194,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         /////ADD USER DATA INSIDE FIREBASE ///////////
                         UserEmail = (String) FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                        UserPhone = (String) FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+
                         Userid = (String) FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                         storedata_of_user(UserEmail,UserPhone,Userid);
@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity {
         if(!isEmpty(userEmail)){
             user_to_add.put("email",userEmail);
         }
-        if(!isEmpty(userEmail)){
+        if(!isEmpty(userPhone)){
             user_to_add.put("phone",userPhone);
         }
 

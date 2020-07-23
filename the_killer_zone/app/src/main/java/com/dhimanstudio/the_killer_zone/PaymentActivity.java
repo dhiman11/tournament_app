@@ -1,5 +1,6 @@
 package com.dhimanstudio.the_killer_zone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -19,9 +20,12 @@ import com.dhimanstudio.pubg_multiplayer.R;
 import com.dhimanstudio.the_killer_zone.model.AppEnvironment;
 import com.dhimanstudio.the_killer_zone.model.AppPreference;
 import com.dhimanstudio.the_killer_zone.model.BaseApplication;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.payumoney.core.PayUmoneyConfig;
 import com.payumoney.core.PayUmoneyConstants;
@@ -65,6 +69,7 @@ public class PaymentActivity extends AppCompatActivity {
     private String email;
     private String username;
     private String user_id;
+    private String payment_response;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -446,18 +451,54 @@ public class PaymentActivity extends AppCompatActivity {
 
                 // Response from Payumoney
                 String payuResponse = transactionResponse.getPayuResponse();
+                try {
+                    JSONObject jsonObject = new JSONObject(payuResponse);
+                    Log.d("payment_status",jsonObject.getString("result"));
+
+                    JSONObject payment_object = jsonObject.getJSONObject("result");
+
+                    String payment_success = payment_object.getString("status");
+                    String txnid = payment_object.getString("txnid");
+                    String paymentId = payment_object.getString("paymentId");
+                    String amount = payment_object.getString("amount");
+                    String productinfo = payment_object.getString("productinfo");
+
+                    payment_response =  "Payment "+payment_success+"  ["+txnid+"] ";
+
+                    final Map<String, Object> user_payment = new HashMap<>();
+
+                    user_payment.put("paymentId",paymentId);
+                    user_payment.put("txnid",txnid);
+                    user_payment.put("payment",payment_success);
+                    user_payment.put("amount",amount);
+                    user_payment.put("productinfo",productinfo);
+
+                    db.collection("Users")
+                            .document(user_id)
+                            .collection("UserPayments")
+                            .add(user_payment)
+                            .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    Toast.makeText(PaymentActivity.this, "Sub collection added", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }catch (JSONException err){
+                    Log.d("Error", err.toString());
+                }
 
                 // Response from SURl and FURL
                 String merchantResponse = transactionResponse.getTransactionDetails();
 
-//                new AlertDialog.Builder(this)
-//                        .setCancelable(false)
-//                        .setMessage("Payu's Data : " + payuResponse + "\n\n\n Merchant's Data: " + merchantResponse)
-//                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int whichButton) {
-//                                dialog.dismiss();
-//                            }
-//                        }).show();
+                new AlertDialog.Builder(this)
+                        .setCancelable(false)
+                        .setMessage(payment_response)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }).show();
 
             } else if (resultModel != null && resultModel.getError() != null) {
                 Log.d(TAG, "Error response : " + resultModel.getError().getTransactionResponse());

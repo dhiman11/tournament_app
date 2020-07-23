@@ -19,6 +19,10 @@ import com.dhimanstudio.pubg_multiplayer.R;
 import com.dhimanstudio.the_killer_zone.model.AppEnvironment;
 import com.dhimanstudio.the_killer_zone.model.AppPreference;
 import com.dhimanstudio.the_killer_zone.model.BaseApplication;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.payumoney.core.PayUmoneyConfig;
 import com.payumoney.core.PayUmoneyConstants;
 import com.payumoney.core.PayUmoneySdkInitializer;
@@ -42,6 +46,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -53,6 +58,15 @@ public class PaymentActivity extends AppCompatActivity {
     private PayUmoneySdkInitializer.PaymentParam mPaymentParams;
     private AppPreference mAppPreference;
     public static final String TAG = "PaymentActivity : ";
+    private String wallet_amount;
+    private String adding_amount;
+    private FirebaseUser mCurrentUser;
+    private String phone;
+    private String email;
+    private String username;
+    private String user_id;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
     //declare paymentParam object
@@ -68,11 +82,21 @@ public class PaymentActivity extends AppCompatActivity {
         PayUmoneySdkInitializer.PaymentParam paymentParam = null;
 
 
-        launchPayUMoneyFlow();
+        Bundle b = getIntent().getExtras();
+        if(b != null){
+            wallet_amount = b.getString("payment");
+            phone = b.getString("phone");
+            email = b.getString("email");
+            username = b.getString("username");
+        }
+
+
+
+        launchPayUMoneyFlow(phone,email,username);
         /*------------- PAYMENT ---------------*/
     }
 
-    private void launchPayUMoneyFlow() {
+    private void launchPayUMoneyFlow(String user_phone,String user_email,String user_display_name) {
 
         PayUmoneyConfig payUmoneyConfig = PayUmoneyConfig.getInstance();
 
@@ -89,10 +113,10 @@ public class PaymentActivity extends AppCompatActivity {
         //////////////////////////////////////////
         String txnId =  "TXN"+System.currentTimeMillis() + "";
         //String txnId = "TXNID720431525261327973";
-        String phone = "7087294676";
-        String productName = "kz";
-        String firstName = "Akshay";
-        String email = "dhimanvlogs@gmail.com";
+        String phone = user_phone;
+        String productName = "10 PUBG Coins";
+        String firstName = user_display_name;
+        String email = user_email;
         String udf1 = "";
         String udf2 = "";
         String udf3 = "";
@@ -388,9 +412,36 @@ public class PaymentActivity extends AppCompatActivity {
                 if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
                     //Success Transaction
                     Log.d("payment","Transaction SUCCESS");
+
+                    Number wallet_current = Integer.valueOf(wallet_amount);
+                    Number wallet_added =   10;
+                    Number c = wallet_current.intValue() + wallet_added.intValue();
+
+
+                    final Map<String, Object> user_to_add = new HashMap<>();
+                    user_to_add.put("wallet_amount",c.intValue());
+
+                    user_id = (String) FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+
+                    db.collection("Users")
+                            .document(user_id)
+                            .update(user_to_add)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(PaymentActivity.this, "Payment is done .Money is added inside your wallet.", Toast.LENGTH_SHORT).show();
+                                    Intent paymentintent = new Intent(PaymentActivity.this, HomeActivity.class);
+                                    startActivity(paymentintent);
+                                }
+                            });
+
+
+
                 } else {
                     //Failure Transaction
-                    Log.d("payment","Transaction FAILED");
+                    Toast.makeText(PaymentActivity.this, "Payment is Failed .Money is not added inside your wallet.", Toast.LENGTH_SHORT).show();
+                    Intent paymentintent = new Intent(PaymentActivity.this, HomeActivity.class);
+                    startActivity(paymentintent);
                 }
 
                 // Response from Payumoney
@@ -399,14 +450,14 @@ public class PaymentActivity extends AppCompatActivity {
                 // Response from SURl and FURL
                 String merchantResponse = transactionResponse.getTransactionDetails();
 
-                new AlertDialog.Builder(this)
-                        .setCancelable(false)
-                        .setMessage("Payu's Data : " + payuResponse + "\n\n\n Merchant's Data: " + merchantResponse)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.dismiss();
-                            }
-                        }).show();
+//                new AlertDialog.Builder(this)
+//                        .setCancelable(false)
+//                        .setMessage("Payu's Data : " + payuResponse + "\n\n\n Merchant's Data: " + merchantResponse)
+//                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                dialog.dismiss();
+//                            }
+//                        }).show();
 
             } else if (resultModel != null && resultModel.getError() != null) {
                 Log.d(TAG, "Error response : " + resultModel.getError().getTransactionResponse());

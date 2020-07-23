@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private String UserEmail;
     private String UserPhone;
     private String Userid;
-
+    private String mobile_number;
     ////////////////////////////
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String country_code = mCountryCode.getText().toString();
                 String phone_number = mPhoneNumber.getText().toString();
-
+                mobile_number = phone_number;
                 String complete_phone_number = "+" + country_code + phone_number;
 
                 if(country_code.isEmpty() || phone_number.isEmpty()){
@@ -192,12 +192,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
 
-
                         /////ADD USER DATA INSIDE FIREBASE ///////////
-                        UserEmail = (String) mAuth.getCurrentUser().getEmail();
-                        Userid = (String) mAuth.getCurrentUser().getUid();
-                        storedata_of_user(UserEmail,"",Userid);
-                        sendUserToHome();
+                        UserEmail = (String) FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                        UserPhone = (String) FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+                        Userid = (String) FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                        storedata_of_user(UserEmail,UserPhone,Userid);
+
 
                     }else{
                         Toast.makeText(LoginActivity.this, "Failed final", Toast.LENGTH_SHORT).show();
@@ -205,6 +206,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
     private void storedata_of_user(String userEmail, String userPhone, final String userid) {
 
@@ -236,6 +240,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                       //Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                                        sendUserToHome();
                                     }
                                 });
 
@@ -248,7 +253,8 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    //Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                                    sendUserToHome();
                                 }
                             });
                     }
@@ -276,11 +282,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             /////ADD USER DATA INSIDE FIREBASE ///////////
-                            UserPhone = (String) mAuth.getCurrentUser().getPhoneNumber();
-                            Userid = (String) mAuth.getCurrentUser().getUid();
+                            UserPhone = mobile_number;
+                            Userid = (String) FirebaseAuth.getInstance().getCurrentUser().getUid();
                             storedata_of_user("",UserPhone,Userid);
                             //////ADD USER END HERE ///////////////////////
-                            sendUserToHome();
+//                            sendUserToHome();
                             // ...
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

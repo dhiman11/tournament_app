@@ -19,11 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.dhimanstudio.the_killer_zone.GameDetail;
 import com.dhimanstudio.the_killer_zone.LoginActivity;
 import com.dhimanstudio.pubg_multiplayer.R;
-import com.dhimanstudio.the_killer_zone.PaymentActivity;
 import com.dhimanstudio.the_killer_zone.WalletDetail;
 import com.dhimanstudio.the_killer_zone.model.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +41,8 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.text.TextUtils.isEmpty;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the  factory method to
@@ -57,7 +58,7 @@ public class ProfileFragment extends Fragment {
     private String user_id;
     private String user_image_url;
     private ImageButton wallet_image_click;
-    private String user_pubg_id;
+
 //    private TextView username_top;
     private TextView wallet_amount;
     private ProgressBar progressBar_profile;
@@ -85,6 +86,11 @@ public class ProfileFragment extends Fragment {
 
 
     private Button save_profile;
+
+
+    /////*Define stings variable*/
+    private String user_name,user_username,user_phone,UserEmailString,user_pubg_id;
+
 
 
     @Override
@@ -185,11 +191,11 @@ public class ProfileFragment extends Fragment {
 //                            username_top = profile_view.findViewById(R.id.username_top);
 
 
-                            String user_name = (String) documentSnapshot.getString("name");
-                            String user_username = (String)  documentSnapshot.getString("username");
-                            String user_phone = (String)  documentSnapshot.getString("phone");
-                            String UserEmailString = (String)  documentSnapshot.getString("email");
-                            String user_pubg_id = (String)  documentSnapshot.getString("pubgid");
+                              user_name = (String) documentSnapshot.getString("name");
+                              user_username = (String)  documentSnapshot.getString("username");
+                              user_phone = (String)  documentSnapshot.getString("phone");
+                              UserEmailString = (String)  documentSnapshot.getString("email");
+                              user_pubg_id = (String)  documentSnapshot.getString("pubgid");
 
                             Profile p = documentSnapshot.toObject(Profile.class);
 
@@ -215,13 +221,14 @@ public class ProfileFragment extends Fragment {
         wallet_amount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                go_to_wallet_page();
+                go_to_wallet_page(UserEmailString,user_username,user_phone);
             }
         });
+
         wallet_image_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                go_to_wallet_page();
+                go_to_wallet_page(UserEmailString,user_username,user_phone);
             }
         });
         /* Wallet Redirect end */
@@ -282,11 +289,23 @@ public class ProfileFragment extends Fragment {
     }
 
     /* Wallet redirect */
-    private void go_to_wallet_page() {
+    private boolean go_to_wallet_page(String UserEmailString, String user_username, String user_phone) {
+
+        ///Check if we have required fields
+        if(isEmpty(UserEmailString) || isEmpty(user_username) || isEmpty(user_phone)){
+            Toast.makeText(getContext(), "Please fill the user detail . Eg Username , Email , Phone. ", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
         Intent paymentintent = new Intent(getActivity(), WalletDetail.class);
         paymentintent.putExtra("wallet_amount",wallet_money_string.toString());
+        paymentintent.putExtra("username",user_username);
+        paymentintent.putExtra("email",UserEmailString);
+        paymentintent.putExtra("phone",user_phone);
         paymentintent.putExtra("user_id",mAuth.getCurrentUser().getUid());
         startActivity(paymentintent);
+        return true;
     }
 
 

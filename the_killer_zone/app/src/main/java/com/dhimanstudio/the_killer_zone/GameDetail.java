@@ -130,10 +130,10 @@ public class GameDetail extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
 
-                                Intent paymentintent = new Intent(GameDetail.this, PaymentActivity.class);
-                                paymentintent.putExtra("payment",entry_fee);
-                                paymentintent.putExtra("secondKeyName","SecondKeyValue");
-                                startActivity(paymentintent);
+//                                Intent paymentintent = new Intent(GameDetail.this, PaymentActivity.class);
+//                                paymentintent.putExtra("payment",entry_fee);
+//                                paymentintent.putExtra("secondKeyName","SecondKeyValue");
+//                                startActivity(paymentintent);
 
                             }
                         });

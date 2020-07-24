@@ -115,7 +115,7 @@ public class WalletDetail extends AppCompatActivity {
 
                             /* count the data */
                             if(count ==0){
-                                Toast.makeText(WalletDetail.this, "Sorry No tournament available", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(WalletDetail.this, "No wallet history avaialble", Toast.LENGTH_SHORT).show();
                             }
                         } else {
 

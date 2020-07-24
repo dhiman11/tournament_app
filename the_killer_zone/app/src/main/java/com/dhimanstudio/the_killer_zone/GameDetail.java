@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.Response;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,6 +48,7 @@ public class GameDetail extends AppCompatActivity {
     private ImageView image_view,game;
     private TextView game_name,game_map_val,game_val,team_val,server_name,entry_fees,particpant,per_kill_str,winning_price,match_date_val;
 
+    private String name,image,tournament_date_m;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +78,8 @@ public class GameDetail extends AppCompatActivity {
                         String game = (String)  document.getString("game");
                         String game_id = (String)  document.getString("game_id");
                         String game_map = (String)  document.getString("game_map");
-                        String image = (String)  document.getString("image");
-                        String name = (String)  document.getString("name");
+                          image = (String)  document.getString("image");
+                          name = (String)  document.getString("name");
 
 
 
@@ -118,7 +120,7 @@ public class GameDetail extends AppCompatActivity {
                         Date date = new Date(tournament_start_date.getSeconds());
 
                         match_date_val.setText(get_date_oftournament(date));
-
+                        tournament_date_m = (String) get_date_oftournament(date).toString();
 
                         image_view = findViewById(R.id.image_view);
                         Picasso.get().load(image).into(image_view);
@@ -130,10 +132,12 @@ public class GameDetail extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
 
-//                                Intent paymentintent = new Intent(GameDetail.this, PaymentActivity.class);
-//                                paymentintent.putExtra("payment",entry_fee);
-//                                paymentintent.putExtra("secondKeyName","SecondKeyValue");
-//                                startActivity(paymentintent);
+                                Intent paymentintent = new Intent(GameDetail.this, ConfirmTournamentJoin.class);
+                                paymentintent.putExtra("entry_fee",entry_fee);
+                                paymentintent.putExtra("tournament_date_m", tournament_date_m);
+                                paymentintent.putExtra("name", name);
+                                paymentintent.putExtra("image", image);
+                                startActivity(paymentintent);
 
                             }
                         });

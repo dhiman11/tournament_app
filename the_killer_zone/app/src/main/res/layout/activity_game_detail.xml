@@ -32,9 +32,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                tools:layout_editor_absoluteX="92dp"
-                tools:layout_editor_absoluteY="9dp"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="80dp"
                 tools:srcCompat="@tools:sample/avatars" />
+
+            <ProgressBar
+                android:id="@+id/progressBarshow"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:animationResolution="@integer/int_1"
+                android:indeterminate="false"
+                android:max="30"
+                android:progress="0"
+                app:layout_constraintBottom_toBottomOf="@+id/image_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="40dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorAccent"
+                app:layout_constraintBottom_toTopOf="@+id/progressBarshow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_baseline_people_detail_page" />
+
+            <TextView
+                android:id="@+id/progresstext"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorAccent"
+                android:paddingTop="3dp"
+                android:paddingRight="10dp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/progressBarshow"
+                app:layout_constraintStart_toEndOf="@+id/imageButton" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -524,6 +564,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorAccent"
                     android:clickable="true"
+                    android:enabled="false"
                     android:text="+ JOIN NOW"
                     android:textColor="#FFFFFF" />
             </androidx.cardview.widget.CardView>

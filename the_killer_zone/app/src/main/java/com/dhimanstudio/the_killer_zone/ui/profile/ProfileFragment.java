@@ -1,5 +1,6 @@
 package com.dhimanstudio.the_killer_zone.ui.profile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,12 +26,14 @@ import com.dhimanstudio.the_killer_zone.LoginActivity;
 import com.dhimanstudio.pubg_multiplayer.R;
 import com.dhimanstudio.the_killer_zone.WalletDetail;
 import com.dhimanstudio.the_killer_zone.model.Profile;
+import com.dhimanstudio.the_killer_zone.model.Session;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -58,7 +61,7 @@ public class ProfileFragment extends Fragment {
     private String user_id;
     private String user_image_url;
     private ImageButton wallet_image_click;
-
+    private FirebaseUser userauth = FirebaseAuth.getInstance().getCurrentUser();
 //    private TextView username_top;
     private TextView wallet_amount;
     private ProgressBar progressBar_profile;
@@ -84,7 +87,7 @@ public class ProfileFragment extends Fragment {
     private ImageView user_avtar;
     private ImageButton logoutbtn;
 
-
+    private Session session;
     private Button save_profile;
 
 
@@ -206,9 +209,11 @@ public class ProfileFragment extends Fragment {
 
                             /////LOAD DATA inside form
                             r_name.setText(user_name);
+                            update_display_name(user_username);
 //                            username_top.setText(user_name);
                             r_email.setText(UserEmailString);
                             r_username.setText(user_username);
+
                             r_pubg_id.setText(user_pubg_id);
                             r_phone.setText(user_phone);
 
@@ -288,6 +293,17 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void update_display_name(String user_name) {
+
+            session = new Session(getContext().getApplicationContext()); //in oncreate
+            session.setusename(user_name);
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+            .setDisplayName(user_name).build();
+            userauth.updateProfile(profileUpdates);
+
+
+    }
+
     /* Wallet redirect */
     private boolean go_to_wallet_page(String UserEmailString, String user_username, String user_phone) {
 
@@ -362,9 +378,13 @@ public class ProfileFragment extends Fragment {
 
                         /////LOAD DATA inside form
                         r_name.setText(user_name);
+
 //                        username_top.setText(user_name);
                         r_email.setText(UserEmailString);
                         r_username.setText(user_username);
+                       /*set display name*/
+                        update_display_name(user_username);
+                        /*set display name*/
                         r_pubg_id.setText(user_pubg_id);
                         r_phone.setText(user_phone);
                         /////////////////////////////////

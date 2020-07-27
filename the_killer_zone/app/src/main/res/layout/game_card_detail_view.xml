@@ -9,7 +9,7 @@
     android:layout_marginTop="20dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="10dp"
-    android:background="#FFFFFF">
+    android:background="#F4EFEF">
 
     <ImageView
         android:id="@+id/game_image"
@@ -32,13 +32,13 @@
         android:layout_alignEnd="@+id/game_image"
         android:layout_alignBottom="@+id/game_image"
         android:layout_alignParentStart="false"
-        android:background="#656464"
+        android:background="@color/background_color"
         android:fadingEdgeLength="2dp"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:singleLine="false"
         android:text="TextView"
-        android:textColor="@color/lightGray"
+        android:textColor="@color/colorWhite"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +59,125 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/game_name"
         app:layout_constraintVertical_bias="0.78" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/timercontainer"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:background="#51000000"
+        app:layout_constraintBottom_toTopOf="@+id/game_name"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/minscount"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="MINS"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/hrscount"
+            app:layout_constraintTop_toBottomOf="@+id/mins" />
+
+        <TextView
+            android:id="@+id/days"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="DAYS"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/secscount"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="secs"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/minscount"
+            app:layout_constraintTop_toBottomOf="@+id/secs" />
+
+        <TextView
+            android:id="@+id/secs"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="secs"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/mins"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mins"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="MINS"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/hrs"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hrscount"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="HRS"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/dayscount"
+            app:layout_constraintTop_toBottomOf="@+id/hrs" />
+
+        <TextView
+            android:id="@+id/dayscount"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="DAYS"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/days" />
+
+        <TextView
+            android:id="@+id/hrs"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="HRS"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/days"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matchin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:background="#003E3E3E"
+            android:text="MATCH IN"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

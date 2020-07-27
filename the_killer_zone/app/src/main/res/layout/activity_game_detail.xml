@@ -15,7 +15,8 @@
         android:overScrollMode="always"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:paddingBottom="100dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout13"
@@ -58,7 +59,8 @@
                 android:layout_height="26dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimary"
+                android:contentDescription="TODO"
                 app:layout_constraintBottom_toTopOf="@+id/progressBarshow"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/ic_baseline_people_detail_page" />
@@ -68,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimary"
                 android:paddingTop="3dp"
                 android:paddingRight="10dp"
                 android:textColor="#FFFFFF"
@@ -80,15 +82,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout12"
             android:layout_width="match_parent"
-            android:layout_height="550dp"
+            android:layout_height="match_parent"
             android:background="#656464"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.529"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout13"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.01">
 
             <TextView
                 android:id="@+id/textView34"
@@ -146,6 +149,40 @@
                 android:textSize="22dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Players joined"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="104dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
+
+                <Button
+                    android:id="@+id/join_button"
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:enabled="false"
+                    android:text="+ JOIN NOW"
+                    android:textColor="#FFFFFF" />
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout14"
@@ -548,26 +585,15 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_end="530dp" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="104dp"
-                android:layout_height="47dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/playerjoinedrecycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:cardCornerRadius="15dp"
+                android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
-
-                <Button
-                    android:id="@+id/join_button"
-                    android:layout_width="104dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:clickable="true"
-                    android:enabled="false"
-                    android:text="+ JOIN NOW"
-                    android:textColor="#FFFFFF" />
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

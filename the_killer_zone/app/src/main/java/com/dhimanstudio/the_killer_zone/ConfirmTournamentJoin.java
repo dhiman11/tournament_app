@@ -187,6 +187,12 @@ public class ConfirmTournamentJoin extends AppCompatActivity {
         tournamament_joined_data.put("tournament_id", tournament_id);
         tournamament_joined_data.put("user_id", user_id);
         tournamament_joined_data.put("username", sessionusername);
+        tournamament_joined_data.put("match_date", tournament_date_m);
+        tournamament_joined_data.put("image", image);
+        tournamament_joined_data.put("name", name);
+        /*Status if 1 = joined / if 2 match finished and paid money in wallet  */
+        tournamament_joined_data.put("status", 1);
+
         CollectionReference addtournament = db.collection("Tournament_joined");
         addtournament
                 .add(tournamament_joined_data)

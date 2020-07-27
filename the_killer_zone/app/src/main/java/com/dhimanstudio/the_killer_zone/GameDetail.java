@@ -2,6 +2,7 @@ package com.dhimanstudio.the_killer_zone;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -15,9 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dhimanstudio.pubg_multiplayer.R;
+import com.dhimanstudio.the_killer_zone.adapter.Mydetailjoined;
+import com.dhimanstudio.the_killer_zone.adapter.MygamesListAdapter;
+import com.dhimanstudio.the_killer_zone.adapter.MyjoinedAdapter;
 import com.dhimanstudio.the_killer_zone.model.Session;
 import com.dhimanstudio.the_killer_zone.model.Tournament_detail;
 import com.dhimanstudio.the_killer_zone.model.Tournament_joined;
+import com.dhimanstudio.the_killer_zone.model.Tournament_list;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -44,6 +49,10 @@ public class GameDetail extends AppCompatActivity {
     private Boolean joinedornot;
     private ProgressBar progressBar;
     ArrayList<Tournament_joined> list;
+
+    private RecyclerView mRecyclerPlayView;
+    Mydetailjoined adapter;
+
     private ObjectAnimator progressAnimator;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -58,6 +67,7 @@ public class GameDetail extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if(b != null)
             document_key = b.getString("doc");
+
 
 
 
@@ -136,7 +146,7 @@ public class GameDetail extends AppCompatActivity {
                         join_button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
+                                join_button.setEnabled(false);
                                 Intent paymentintent = new Intent(GameDetail.this, ConfirmTournamentJoin.class);
                                 paymentintent.putExtra("tournament_id",document_key);
                                 paymentintent.putExtra("entry_fee",entry_fee);
@@ -198,20 +208,27 @@ public class GameDetail extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     int count = 0;
                     int exist_or_not = 0;
+
+                    list = new ArrayList<Tournament_joined>();
+
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Tournament_joined join = document.toObject(Tournament_joined.class);
+                        list.add(join);
 
                         user_id_string = join.getUser_id().trim();
 
                         if(user_id_string.equals(user_id)){
                             exist_or_not++;
                             Log.d("the user in",join.getUser_id());
-                        }
 
+                        }
                         count++;
                     }
 
 
+                    mRecyclerPlayView = (RecyclerView) findViewById(R.id.playerjoinedrecycle);
+                    adapter = new Mydetailjoined(GameDetail.this,list);
+                    mRecyclerPlayView.setAdapter(adapter);
 
 
 

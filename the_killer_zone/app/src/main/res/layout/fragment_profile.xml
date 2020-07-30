@@ -335,12 +335,12 @@
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phone"
+                    android:text="Paytm Phone"
                     android:textColor="#C4AEAEAE"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="@+id/user_phone"
                     app:layout_constraintEnd_toEndOf="@+id/user_phone"
-                    app:layout_constraintHorizontal_bias="0.192"
+                    app:layout_constraintHorizontal_bias="0.21"
                     app:layout_constraintStart_toStartOf="@+id/user_phone" />
 
                 <TextView

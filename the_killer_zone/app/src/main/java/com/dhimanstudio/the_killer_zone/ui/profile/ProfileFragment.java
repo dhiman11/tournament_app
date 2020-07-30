@@ -183,9 +183,6 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-
-
-
                             r_username = profile_view.findViewById(R.id.user_username);
                             r_pubg_id = profile_view.findViewById(R.id.user_pubg_id);
                             r_email = profile_view.findViewById(R.id.user_email);

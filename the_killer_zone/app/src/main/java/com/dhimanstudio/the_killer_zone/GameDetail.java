@@ -2,6 +2,7 @@ package com.dhimanstudio.the_killer_zone;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.ObjectAnimator;
@@ -16,18 +17,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dhimanstudio.pubg_multiplayer.R;
-import com.dhimanstudio.the_killer_zone.adapter.Mydetailjoined;
-import com.dhimanstudio.the_killer_zone.adapter.MygamesListAdapter;
-import com.dhimanstudio.the_killer_zone.adapter.MyjoinedAdapter;
-import com.dhimanstudio.the_killer_zone.model.Session;
+import com.dhimanstudio.the_killer_zone.adapter.MydetailjoinedAdapter;
 import com.dhimanstudio.the_killer_zone.model.Tournament_detail;
 import com.dhimanstudio.the_killer_zone.model.Tournament_joined;
-import com.dhimanstudio.the_killer_zone.model.Tournament_list;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,8 +46,8 @@ public class GameDetail extends AppCompatActivity {
     private ProgressBar progressBar;
     ArrayList<Tournament_joined> list;
 
-    private RecyclerView mRecyclerPlayView;
-    Mydetailjoined adapter;
+    private RecyclerView mRecyclerdetailView;
+    MydetailjoinedAdapter adapter;
 
     private ObjectAnimator progressAnimator;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -198,13 +194,16 @@ public class GameDetail extends AppCompatActivity {
 
     /* check if already joined */
     private void check_if_already_joined() {
-        final CollectionReference Tournament_joined = db.collection("Tournament_joined");
-        Tournament_joined
+
+                 db.collection("Tournament_joined")
                 .whereEqualTo("tournament_id",document_key)
 //                .whereEqualTo("user_id",user_id)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                mRecyclerdetailView = (RecyclerView) findViewById(R.id.playerjoinedrecycle);
+                mRecyclerdetailView.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
                 if (task.isSuccessful()) {
                     int count = 0;
                     int exist_or_not = 0;
@@ -213,6 +212,7 @@ public class GameDetail extends AppCompatActivity {
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Tournament_joined join = document.toObject(Tournament_joined.class);
+
                         list.add(join);
 
                         user_id_string = join.getUser_id().trim();
@@ -226,9 +226,10 @@ public class GameDetail extends AppCompatActivity {
                     }
 
 
-                    mRecyclerPlayView = (RecyclerView) findViewById(R.id.playerjoinedrecycle);
-                    adapter = new Mydetailjoined(GameDetail.this,list);
-                    mRecyclerPlayView.setAdapter(adapter);
+
+                    adapter = new MydetailjoinedAdapter(GameDetail.this,list);
+                    mRecyclerdetailView.setAdapter(adapter);
+
 
 
 
@@ -249,9 +250,8 @@ public class GameDetail extends AppCompatActivity {
 
                     disable_button_if_false(count,participants_int,exist_or_not);
 
-
-
-
+                }else{
+                    Log.d("tournament joined ","failed");
                 }
             }
         });

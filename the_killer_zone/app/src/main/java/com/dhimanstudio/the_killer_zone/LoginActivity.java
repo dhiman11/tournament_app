@@ -210,62 +210,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private void storedata_of_user(String userEmail, String userPhone, final String userid) {
 
-        ///////////////////////////////////////////////////
-        final Map<String, Object> user_to_add = new HashMap<>();
-
-        if(!isEmpty(userEmail)){
-            user_to_add.put("email",userEmail);
-        }
-        if(!isEmpty(userPhone)){
-            user_to_add.put("phone",userPhone);
-        }
-
-
-        ///////////////////////////////////////////////////
-        DocumentReference userid_esist = db.collection("Users").document(userid);
-
-        userid_esist.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        ////////////////////Update
-                        db.collection("Users")
-                                .document(userid)
-                                .update(user_to_add)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                      //Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
-                                        sendUserToHome();
-                                    }
-                                });
-
-                    }else{
-                        //////////Add this data
-                        user_to_add.put("wallet_amount",0);
-                        db.collection("Users")
-                            .document(userid)
-                            .set(user_to_add)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
-                                    sendUserToHome();
-                                }
-                            });
-                    }
-                }else{
-                    Log.d("Failed","failed to save data");
-                }
-            }
-        });
-
-
-    }
 
     @Override
     protected void onStart() {
@@ -309,6 +254,65 @@ public class LoginActivity extends AppCompatActivity {
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(homeIntent);
         finish();
+    }
+
+
+
+    private void storedata_of_user(String userEmail, String userPhone, final String userid) {
+
+        ///////////////////////////////////////////////////
+        final Map<String, Object> user_to_add = new HashMap<>();
+
+        if(!isEmpty(userEmail)){
+            user_to_add.put("email",userEmail);
+        }
+        if(!isEmpty(userPhone)){
+            user_to_add.put("phone",userPhone);
+        }
+
+
+        ///////////////////////////////////////////////////
+        DocumentReference userid_esist = db.collection("Users").document(userid);
+
+        userid_esist.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ////////////////////Update
+                        db.collection("Users")
+                                .document(userid)
+                                .update(user_to_add)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                                        sendUserToHome();
+                                    }
+                                });
+
+                    }else{
+                        //////////Add this data
+                        user_to_add.put("wallet_amount",0);
+                        db.collection("Users")
+                                .document(userid)
+                                .set(user_to_add)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(LoginActivity.this, "User is added successfully", Toast.LENGTH_SHORT).show();
+                                        sendUserToHome();
+                                    }
+                                });
+                    }
+                }else{
+                    Log.d("Failed","failed to save data");
+                }
+            }
+        });
+
+
     }
 
 

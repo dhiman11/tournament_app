@@ -154,7 +154,7 @@ public class PaymentActivity extends AppCompatActivity {
                 .setUdf8(udf8)
                 .setUdf9(udf9)
                 .setUdf10(udf10)
-                .setIsDebug(false)
+                .setIsDebug(true)
                 .setKey(merchantkey)
                 .setMerchantId(merchantId);
 
